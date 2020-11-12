@@ -52,7 +52,7 @@ class RecordController extends Controller
         $validated = $request->validated();
         $record = Record::create($validated);
         request()->session()->flash('alert-info','CDD cadastrado com sucesso');
-        return redirect("/records");
+        return redirect("/records/{$record->id}");
     }
 
     /**
@@ -94,7 +94,7 @@ class RecordController extends Controller
         $validated = $request->validated();
         $record->update($validated);
         request()->session()->flash('alert-info','CDD atualizado com sucesso');
-        return redirect("/records");
+        return redirect("/records/{$record->id}");
     }
 
     /**
