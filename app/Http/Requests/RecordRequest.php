@@ -38,6 +38,8 @@ class RecordRequest extends FormRequest
     {
     return [
         'assunto.required' => 'O assunto não pode ficar em branco.',
+        'enviado_para_sibi.required' => 'Selecione uma opção para "Enviado para SIBI".',
+        'normalizado.required' => 'Selecione uma opção para "Normalizado".',
     ];
     }
 }

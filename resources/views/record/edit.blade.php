@@ -1,4 +1,4 @@
-@extends('laravel-usp-theme::master')
+@extends('main')
 @section('content')
   <form method="POST" action="/records/{{ $record->id }}">
     @csrf

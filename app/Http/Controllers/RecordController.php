@@ -106,6 +106,7 @@ class RecordController extends Controller
     public function destroy(Record $record)
     {
         $record->delete();
+        request()->session()->flash('alert-info','CDD excluído com sucesso.');
         return redirect('/records');
     }
 }
