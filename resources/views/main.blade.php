@@ -1,5 +1,14 @@
 @extends('laravel-usp-theme::master')
 
+@section('styles')
+    <link rel='stylesheet' href="{{ asset('assets/css/app.css') }}">
+@endsection
+
+@section('javascripts_bottom')
+    @parent
+    <script src="{{ asset('assets/js/app.js') }}" type="text/javascript"></script>
+@endsection
+
 @section('flash')
     @if ($errors->any())
     <div class="alert alert-danger">
