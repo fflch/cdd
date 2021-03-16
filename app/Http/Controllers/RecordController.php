@@ -13,10 +13,35 @@ class RecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function search(Request $request) 
     {
-        $records = Record::all();
-        return view('record.index', [
+        if(isset(request()->busca_assunto)) {
+            $records = Record::where('assunto', 'LIKE',"%{$request->busca_assunto}%")->paginate(10);
+
+        } else if(isset(request()->busca_observacao)) {
+            $records = Record::where('observacao', 'LIKE',"%{$request->busca_observacao}%")->paginate(10);
+        
+        } else if(isset(request()->busca_categoria)) {
+            $records = Record::where('categoria', 'LIKE',"%{$request->busca_categoria}%")->paginate(10);
+        
+        } else if(isset(request()->busca_enviado_para_sibi)) {
+            $records = Record::where('enviado_para_sibi', 'LIKE',"%{$request->busca_enviado_para_sibi}%")->paginate(10);
+
+        } else if(isset(request()->busca_normalizado)) {
+            $records = Record::where('normalizado', 'LIKE',"%{$request->busca_normalizado}%")->paginate(10);
+
+        } else {
+            $records = Record::paginate(20);  
+        }
+        /* dd($records); */
+        return $records;
+    } 
+
+    public function index(Request $request)
+    {
+        $records =  $this->search($request);
+        return view('index',[
             'records' => $records,
         ]);
     }

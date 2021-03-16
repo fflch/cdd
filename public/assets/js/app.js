@@ -28,16 +28,15 @@ function select(id) {
   'use strict';
   const options = [
     'input_busca_assunto', 
-    'input_busca_cdd', 
-    'input_busca_remissiva', 
+    'input_busca_cdd',  
     'input_busca_observacao', 
     'input_busca_categoria',
     'input_busca_enviado_para_sibi', 
     'input_busca_normalizado'
   ]; 
 
-  showEnable(id);
-  options.map((item, index) => { if (options[index] != id) {hideDisable(options[index])} });
+  enable(id);
+  options.map((item, index) => { if (options[index] != id) {disable(options[index])} });
 }
 
 require('./bootstrap');

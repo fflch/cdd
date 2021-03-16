@@ -6,3 +6,7 @@
     display: flex;
     justify-content: space-between;
 }
+
+#query-select-group span {
+    padding-right: 10px;
+}
