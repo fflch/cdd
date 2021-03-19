@@ -66,17 +66,9 @@ class RecordController extends Controller
      */
     public function store(RecordRequest $request)
     {   
-        /* dd([$request->assunto,
-        $request->normalizado,
-        $request->enviado_para_sibi,
-        $request->observacao,
-        $request->classificacao,
-        $request->categoria,
-        ]); */
-
         $validated = $request->validated();
         $record = Record::create($validated);
-        request()->session()->flash('alert-info','CDD cadastrado com sucesso');
+        request()->session()->flash('alert-info','Registro cadastrado com sucesso');
         return redirect("/records/{$record->id}");
     }
 
@@ -118,7 +110,7 @@ class RecordController extends Controller
 
         $validated = $request->validated();
         $record->update($validated);
-        request()->session()->flash('alert-info','CDD atualizado com sucesso');
+        request()->session()->flash('alert-info','Registro atualizado com sucesso');
         return redirect("/records/{$record->id}");
     }
 
@@ -131,7 +123,7 @@ class RecordController extends Controller
     public function destroy(Record $record)
     {
         $record->delete();
-        request()->session()->flash('alert-info','CDD excluído com sucesso.');
+        request()->session()->flash('alert-info','Registro excluído com sucesso.');
         return redirect('/records');
     }
 }

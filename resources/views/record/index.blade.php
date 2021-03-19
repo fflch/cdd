@@ -8,7 +8,7 @@
         @forelse($records as $record)
         @include('record.partials.fields')
         @empty
-            <p>Não há artigos cadastrados ainda.</p>
+            <p>Não há registros cadastrados ainda.</p>
         @endforelse
 </div>
 @endsection
