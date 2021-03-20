@@ -23,7 +23,7 @@ class RemissivaFactory extends Factory
     {
         return [
             'texto' => $this->faker->sentence(3),
-            'record_id' => 1,
+            'record_id' => $this->faker->numberBetween($min = 1, $max = 20),
         ];
     }
 }

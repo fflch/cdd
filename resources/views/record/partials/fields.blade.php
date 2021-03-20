@@ -44,6 +44,18 @@
         <tr>
             <td><div class="font-weight-bold">Categoria:</div>{{  $record->categoria ?? ''  }}</td>      
         </tr>
+        <tr>
+            <td>
+                <div class="font-weight-bold">Remissivas:</div>
+                <ul>
+                    @forelse($record->remissivas as $remissiva)
+                        <li>{{ $remissiva->texto }}</li>
+                    @empty
+                        <span>Ainda não há remissivas cadastradas.</span>
+                    @endforelse
+                </ul>
+            </td>      
+        </tr>
     </div>
     </tbody>
 </table>

@@ -24,7 +24,8 @@ class RemissivaRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'texto' => 'nullable',
+            'texto'     => 'nullable',
+            'record_id' => 'nullable',
         ];
         return $rules;
     }

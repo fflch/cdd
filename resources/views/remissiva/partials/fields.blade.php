@@ -1,7 +1,8 @@
 <div class="card">
+    <div class="card-header">
+        <b>{{ $remissiva->texto }}</b>
+    </div>
     <div class="card-body">
-        <ul>
-            <li><a href="/remissivas/{{ $remissiva->id }}">{{ $remissiva->texto }}</a></li>
-            <li>{{ dd($remissiva->record_id) }}</li>
+        Referente ao assunto <a href="/records/{{ $remissiva->record_id }}">{{ $remissiva->record->assunto }}</a></li>
     </div>
 </div>
