@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CDD;
+use App\Models\Cdd;
 use Illuminate\Http\Request;
 
-class CDDController extends Controller
+class CddController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class CDDController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CDD  $cDD
+     * @param  \App\Models\Cdd  $cdd
      * @return \Illuminate\Http\Response
      */
-    public function show(CDD $cDD)
+    public function show(Cdd $cdd)
     {
         //
     }
@@ -52,10 +52,10 @@ class CDDController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CDD  $cDD
+     * @param  \App\Models\Cdd  $cdd
      * @return \Illuminate\Http\Response
      */
-    public function edit(CDD $cDD)
+    public function edit(Cdd $cdd)
     {
         //
     }
@@ -64,10 +64,10 @@ class CDDController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CDD  $cDD
+     * @param  \App\Models\Cdd  $cdd
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CDD $cDD)
+    public function update(Request $request, Cdd $cdd)
     {
         //
     }
@@ -75,10 +75,10 @@ class CDDController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CDD  $cDD
+     * @param  \App\Models\Cdd  $cdd
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CDD $cDD)
+    public function destroy(Cdd $cdd)
     {
         //
     }

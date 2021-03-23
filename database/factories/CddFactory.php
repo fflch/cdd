@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\CDD;
+use App\Models\Cdd;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CDDFactory extends Factory
+class CddFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = CDD::class;
+    protected $model = Cdd::class;
 
     /**
      * Define the model's default state.

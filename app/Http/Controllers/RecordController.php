@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Record;
+use App\Models\Cdd;
 use Illuminate\Http\Request;
 use App\Http\Requests\RecordRequest;
 
@@ -124,6 +125,27 @@ class RecordController extends Controller
     {
         $record->delete();
         request()->session()->flash('alert-info','Registro excluído com sucesso.');
-        return redirect('/records');
+        return redirect('/');
     }
+
+    public function addCdd(Request $request, Record $record) # WIP
+    {
+
+        # Cria um objeto cdd
+        $cdd = new Cdd;
+        $cdd->cdd = $request->cdd;
+        $cdd->save();
+
+        # não pode existir na tabela categoria_users uma instância
+        # com o user_id e a categoria_id solicitados.
+    }
+
+    public function removeCdd(Request $request, Record $record, Cdd $cdd)
+    {    
+
+        $records->cdds()->detach($cdd->id);
+        request()->session()->flash('alert-danger', "{$cdd->cdd} foi excluído(a) de {$records->assunto}");
+        return redirect("/records/{$records->id}");
+    }
+    
 }

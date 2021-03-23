@@ -9,5 +9,11 @@ use App\Http\Controllers\IndexController;
 Route::get('/create', [RecordController::class,'create']);
 Route::get('/{record}', [RecordController::class,'show']); */ 
 Route::resource('/records', RecordController::class);
+
 Route::resource('/remissivas', RemissivaController::class);
+
 Route::get('/', [IndexController::class,'index']);
+
+Route::post('/records/addcdd/{record}', [RecordController::class,'addCdd']);
+
+Route::delete('/records/removecdd/{record}/{cdd}', [RecordController::class,'removeUser']);

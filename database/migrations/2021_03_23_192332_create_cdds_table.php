@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCDDSTable extends Migration
+class CreateCddsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCDDSTable extends Migration
      */
     public function up()
     {
-        Schema::create('c_d_d_s', function (Blueprint $table) {
+        Schema::create('cdds', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateCDDSTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('c_d_d_s');
+        Schema::dropIfExists('cdds');
     }
 }
