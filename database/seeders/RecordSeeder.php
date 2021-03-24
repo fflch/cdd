@@ -13,7 +13,8 @@ class RecordSeeder extends Seeder
      * @return void
      */
     public function run()
-    {   $categorias = Record::categorias();
+    {   
+        $categorias = Record::categorias();
         $record = [
             'assunto' => "ABELARDO, PEDRO, filósofo e teólogo escolástico francês 1079-1142",
             'enviado_para_sibi' => TRUE,

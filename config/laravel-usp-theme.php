@@ -44,18 +44,9 @@ return [
     'login_url' => config('app.url') . '/login',
     'menu' => [
         [
-            'text' => '<i class="fas fa-home"></i> Home',
-            'url' => config('app.url') . '/records',
-        ],
-        [
-            'text' => 'Cadastrar novo CDD',
-            'url' => config('app.url') . '/records/create',
-            /*'can' => '',*/
-        ],
-        [
-            'text' => 'Item 3',
-            'url' => config('app.url') . '/item3',
-            'can' => 'admin',
+            'text' => '<i class="fas fa-plus-square"></i> Cadastrar',
+            'url' => config('app.url') . 'records/create',
+            /* 'can' => '', */
         ],
         [
             'text' => 'SubMenu1',

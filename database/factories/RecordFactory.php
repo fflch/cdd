@@ -30,4 +30,5 @@ class RecordFactory extends Factory
             'categoria' => $categorias[array_rand($categorias)],
         ];
     }
+
 }
