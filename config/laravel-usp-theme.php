@@ -38,14 +38,15 @@ $submenu2 = [
 
 return [
     'title' => config('app.name'),
-    'dashboard_url' => config('app.url'),
+    'skin' => env('USP_THEME_SKIN', 'uspdev'),
+    'app_url' => config('app.url'),
     'logout_method' => 'POST',
     'logout_url' => config('app.url') . '/logout',
     'login_url' => config('app.url') . '/login',
     'menu' => [
         [
             'text' => '<i class="fas fa-plus-square"></i> Cadastrar',
-            'url' => config('app.url') . 'records/create',
+            'url' => config('app.url') . '/records/create',
             /* 'can' => '', */
         ],
         [

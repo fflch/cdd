@@ -49,13 +49,40 @@
                 <div class="font-weight-bold">Remissivas:</div>
                 <ul>
                     @forelse($record->remissivas as $remissiva)
-                        <li>{{ $remissiva->texto }}</li>
+                        <li>{{ $remissiva->texto }} 
+
+                            <form method="POST" action="/remissivas/{{ $remissiva->id }}">
+                                @csrf 
+                                @method('delete')
+                                <button type="submit" class="btn btn-outline-success">Deletar</button>
+                            </form>
+                        </li>
                     @empty
                         <span>Ainda não há remissivas cadastradas.</span>
                     @endforelse
                 </ul>
+                @include('record.partials.remissiva')
             </td>      
         </tr>
     </div>
     </tbody>
 </table>
+
+CDD:
+<select class="js-example-basic-single" name="state">
+    <option value="AL">Alabama</option>
+    <option value="WY">Wyoming</option>
+</select>
+
+<br>
+
+
+@section('javascripts_bottom')
+<script>
+
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+
+</script>
+@endsection
