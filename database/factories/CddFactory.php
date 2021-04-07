@@ -22,7 +22,7 @@ class CddFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'cdd' => $this->faker->sentence(3),
         ];
     }
 }
