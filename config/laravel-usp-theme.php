@@ -52,7 +52,7 @@ return [
     'menu' => [
         [
             'text' => '<i class="fas fa-plus-square"></i> Cadastrar registro',
-            'url' => config('app.url') . 'records/create',
+            'url' => config('app.url') . 'termos/create',
             /* 'can' => '', */
         ],
         [

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Record;
+use App\Models\Termo;
 
 class IndexController extends Controller
 {
     public function index()
     {   
         return view('index', [
-            'records' => Record::orderBy('assunto')->get()
+            'termos' => Termo::orderBy('assunto')->get()
         ]);
     }
 }

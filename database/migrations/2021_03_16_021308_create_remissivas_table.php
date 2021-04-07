@@ -16,8 +16,8 @@ class CreateRemissivasTable extends Migration
         Schema::create('remissivas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('texto');
-            $table->foreignId('record_id')->constrained('records')->onDelete('cascade');
+            $table->string('titulo');
+            $table->foreignId('termo_id')->constrained('termos')->onDelete('cascade');
 
         });
     }

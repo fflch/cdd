@@ -15,8 +15,8 @@ class RemissivaSeeder extends Seeder
     public function run()
     {
         $remissiva = [
-            'texto' => "ABELARDO, PEDRO",
-            'record_id' => 1,
+            'titulo' => "ABELARDO, PEDRO",
+            'termo_id' => 1,
         ];
         Remissiva::create($remissiva);
         Remissiva::factory(20)->create();

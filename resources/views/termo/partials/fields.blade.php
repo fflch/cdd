@@ -2,10 +2,10 @@
     <thead class="thead border-info">
         <tr class="table alert alert-secondary border-info">
             <th scope="col">
-                <div class="record_header">
-                    <div class="text-uppercase">{{  $record->assunto ?? ''  }}</div>
-                    <form action="/records/{{  $record->id  }}" method="POST">
-                        <a class="btn btn-outline-success" href="/records/{{  $record->id  }}/edit" role="button">Editar</a>
+                <div class="termo_header">
+                    <div class="text-uppercase">{{  $termo->assunto ?? ''  }}</div>
+                    <form action="/termos/{{  $termo->id  }}" method="POST">
+                        <a class="btn btn-outline-success" href="/termos/{{  $termo->id  }}/edit" role="button">Editar</a>
                         @csrf
                         @method('delete')
                         <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Tem certeza?');">Apagar</button> 
@@ -18,7 +18,7 @@
         <tr>
             <td>
                 <div class="font-weight-bold">Enviado para SIBI:</div>
-                @if ($record->enviado_para_sibi == 1)
+                @if ($termo->enviado_para_sibi == 1)
                     Sim
                 @else
                     Não
@@ -28,7 +28,7 @@
         <tr>
             <td>
                 <div class="font-weight-bold">Normalizado:</div>
-                @if ($record->normalizado == 1)
+                @if ($termo->normalizado == 1)
                     Sim
                 @else
                     Não
@@ -36,22 +36,22 @@
             </td>      
         </tr>
         <tr>
-            <td><div class="font-weight-bold">Observação:</div>{{  $record->observacao ?? ''  }}</td>      
+            <td><div class="font-weight-bold">Observação:</div>{{  $termo->observacao ?? ''  }}</td>      
         </tr>
         <tr>
-            <td><div class="font-weight-bold">Classificação:</div>{{  $record->classificacao ?? ''  }}</td>      
+            <td><div class="font-weight-bold">Classificação:</div>{{  $termo->classificacao ?? ''  }}</td>      
         </tr>
         <tr>
-            <td><div class="font-weight-bold">Categoria:</div>{{  $record->categoria ?? ''  }}</td>      
+            <td><div class="font-weight-bold">Categoria:</div>{{  $termo->categoria ?? ''  }}</td>      
         </tr>
         <tr>
             <td>
                 <div class="font-weight-bold">Remissivas:</div>
                 <br>
                 <ul class="list-group">
-                    @forelse($record->remissivas as $remissiva)
+                    @forelse($termo->remissivas as $remissiva)
                         <li class="list-group-item" id="remissiva-list">
-                            {{ $remissiva->texto }}
+                            {{ $remissiva->titulo }}
                             <form method="POST" action="/remissivas/{{ $remissiva->id }}">
                                 @csrf 
                                 @method('delete')
@@ -64,7 +64,7 @@
                 </ul>
                 <br>
                 <div class="font-weight-bold">Adicionar remissiva</div>
-                @include('record.partials.remissiva')
+                @include('termo.partials.remissiva')
 
             </td>      
         </tr>

@@ -19,7 +19,7 @@ class RemissivaController extends Controller
         $validated = $request->validated();
         $remissiva = Remissiva::create($validated);
         request()->session()->flash('alert-info','Remissiva adicionada com sucesso');
-        return redirect("/records/{$remissiva->record_id}");    }
+        return redirect("/termos/{$remissiva->termo_id}");    }
 
     /**
      * Remove the specified resource from storage.
@@ -29,9 +29,9 @@ class RemissivaController extends Controller
      */
     public function destroy(Remissiva $remissiva)
     {
-        $record_id = $remissiva->record_id;
+        $termo_id = $remissiva->termo_id;
         $remissiva->delete();
         request()->session()->flash('alert-info','Remissiva excluída com sucesso.');
-        return redirect("/records/{$record_id}");
+        return redirect("/termos/{$termo_id}");
     }
 }

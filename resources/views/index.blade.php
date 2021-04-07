@@ -2,6 +2,6 @@
 
 @section('content')
 
-@include('record.index')
+@include('termo.index')
 
 @endsection

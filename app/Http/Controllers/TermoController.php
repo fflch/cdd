@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Record;
+use App\Models\Termo;
 use App\Models\Cdd;
 use Illuminate\Http\Request;
-use App\Http\Requests\RecordRequest;
+use App\Http\Requests\TermoRequest;
 
-class RecordController extends Controller
+class TermoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,32 +18,32 @@ class RecordController extends Controller
     public function search(Request $request) 
     {
         if(isset(request()->busca_assunto)) {
-            $records = Record::where('assunto', 'LIKE',"%{$request->busca_assunto}%")->paginate(10);
+            $termos = Termo::where('assunto', 'LIKE',"%{$request->busca_assunto}%")->paginate(10);
 
         } else if(isset(request()->busca_observacao)) {
-            $records = Record::where('observacao', 'LIKE',"%{$request->busca_observacao}%")->paginate(10);
+            $termos = Termo::where('observacao', 'LIKE',"%{$request->busca_observacao}%")->paginate(10);
         
         } else if(isset(request()->busca_categoria)) {
-            $records = Record::where('categoria', 'LIKE',"%{$request->busca_categoria}%")->paginate(10);
+            $termos = Termo::where('categoria', 'LIKE',"%{$request->busca_categoria}%")->paginate(10);
         
         } else if(isset(request()->busca_enviado_para_sibi)) {
-            $records = Record::where('enviado_para_sibi', 'LIKE',"%{$request->busca_enviado_para_sibi}%")->paginate(10);
+            $termos = Termo::where('enviado_para_sibi', 'LIKE',"%{$request->busca_enviado_para_sibi}%")->paginate(10);
 
         } else if(isset(request()->busca_normalizado)) {
-            $records = Record::where('normalizado', 'LIKE',"%{$request->busca_normalizado}%")->paginate(10);
+            $termos = Termo::where('normalizado', 'LIKE',"%{$request->busca_normalizado}%")->paginate(10);
 
         } else {
-            $records = Record::paginate(20);  
+            $termos = Termo::paginate(20);  
         }
-        /* dd($records); */
-        return $records;
+
+        return $termos;
     } 
 
     public function index(Request $request)
     {
-        $records =  $this->search($request);
+        $termos =  $this->search($request);
         return view('index',[
-            'records' => $records,
+            'termos' => $termos,
         ]);
     }
 
@@ -54,8 +54,8 @@ class RecordController extends Controller
      */
     public function create()
     {
-        return view('record.create',[
-            'record' => new Record,
+        return view('termo.create',[
+            'termo' => new termo,
         ]);
     }
 
@@ -65,37 +65,37 @@ class RecordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RecordRequest $request)
+    public function store(TermoRequest $request)
     {   
         $validated = $request->validated();
-        $record = Record::create($validated);
+        $termo = Termo::create($validated);
         request()->session()->flash('alert-info','Registro cadastrado com sucesso');
-        return redirect("/records/{$record->id}");
+        return redirect("/termos/{$termo->id}");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\Termo  $termo
      * @return \Illuminate\Http\Response
      */
-    public function show(Record $record)
+    public function show(Termo $termo)
     {
-        return view('record.show',[
-            'record' => $record,
+        return view('termo.show',[
+            'termo' => $termo,
         ]);  
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\Termo  $termo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Record $record)
+    public function edit(Termo $termo)
     {
-        return view('record.edit',[
-            'record' => $record
+        return view('termo.edit',[
+            'termo' => $termo
         ]);
     }
 
@@ -103,32 +103,32 @@ class RecordController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\Termo  $termo
      * @return \Illuminate\Http\Response
      */
-    public function update(RecordRequest $request, Record $record)
+    public function update(TermoRequest $request, Termo $termo)
     {
 
         $validated = $request->validated();
-        $record->update($validated);
+        $termo->update($validated);
         request()->session()->flash('alert-info','Registro atualizado com sucesso');
-        return redirect("/records/{$record->id}");
+        return redirect("/termos/{$termo->id}");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Record  $record
+     * @param  \App\Models\Termo  $termo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Record $record)
+    public function destroy(Termo $termo)
     {
-        $record->delete();
+        $termo->delete();
         request()->session()->flash('alert-info','Registro excluído com sucesso.');
         return redirect('/');
     }
 
-    public function addCdd(Request $request, Record $record) # WIP
+    public function addCdd(Request $request, Termo $termo) # WIP
     {
 
         # Cria um objeto cdd
@@ -140,12 +140,12 @@ class RecordController extends Controller
         # com o user_id e a categoria_id solicitados.
     }
 
-    public function removeCdd(Request $request, Record $record, Cdd $cdd)
+    public function removeCdd(Request $request, Termo $termo, Cdd $cdd)
     {    
 
-        $records->cdds()->detach($cdd->id);
-        request()->session()->flash('alert-danger', "{$cdd->cdd} foi excluído(a) de {$records->assunto}");
-        return redirect("/records/{$records->id}");
+        $termos->cdds()->detach($cdd->id);
+        request()->session()->flash('alert-danger', "{$cdd->cdd} foi excluído(a) de {$termos->assunto}");
+        return redirect("/termos/{$termos->id}");
     }
     
 }
