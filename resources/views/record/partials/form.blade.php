@@ -26,8 +26,6 @@
                                 checked
                 @endif>Não<br>
             </div>
-        </div>
-        <div class="row">
             <div class="col-sm form-group">  
                 <b>Normalizado</b>
                 <br>

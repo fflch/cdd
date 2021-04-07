@@ -16,6 +16,7 @@ class CreateCddsTable extends Migration
         Schema::create('cdds', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('cdd');
         });
     }
 

@@ -10,3 +10,12 @@
 #query-select-group span {
     padding-right: 10px;
 }
+
+#remissiva-list, #remissiva-add {
+    display: flex;
+    justify-content: space-between;
+}
+
+#remissiva-add {
+    border-color: white;
+}

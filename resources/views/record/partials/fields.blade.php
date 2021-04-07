@@ -47,35 +47,32 @@
         <tr>
             <td>
                 <div class="font-weight-bold">Remissivas:</div>
-                <ul>
+                <br>
+                <ul class="list-group">
                     @forelse($record->remissivas as $remissiva)
-                        <li>{{ $remissiva->texto }} 
-
+                        <li class="list-group-item" id="remissiva-list">
+                            {{ $remissiva->texto }}
                             <form method="POST" action="/remissivas/{{ $remissiva->id }}">
                                 @csrf 
                                 @method('delete')
-                                <button type="submit" class="btn btn-outline-success">Deletar</button>
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Apagar</button>
                             </form>
                         </li>
                     @empty
                         <span>Ainda não há remissivas cadastradas.</span>
                     @endforelse
                 </ul>
+                <br>
+                <div class="font-weight-bold">Adicionar remissiva</div>
                 @include('record.partials.remissiva')
+
             </td>      
         </tr>
     </div>
     </tbody>
 </table>
 
-CDD:
-<select class="js-example-basic-single" name="state">
-    <option value="AL">Alabama</option>
-    <option value="WY">Wyoming</option>
-</select>
-
 <br>
-
 
 @section('javascripts_bottom')
 <script>

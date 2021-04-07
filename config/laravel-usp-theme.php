@@ -1,11 +1,17 @@
 <?php
 $submenu1 = [
+
     [
-        'text' => '<i class="fas fa-atom"></i>  SubItem 1',
-        'url' => config('app.url') . '/subitem1',
+        'text' => '<i class="fas fa-list"></i> Índice CDD',
+        'url' => config('app.url') . 'cdd',
     ],
     
     [
+        'text' => '<i class="fas fa-plus"></i>  Cadastrar CDD',
+        'url' => config('app.url') . 'cdd/create',
+    ],
+    
+    /* [
         'text' => 'SubItem 2',
         'url' => config('app.url') . '/subitem2',
         'can' => 'admin',
@@ -20,7 +26,7 @@ $submenu1 = [
     [
         'text' => 'SubItem 3',
         'url' => config('app.url') . '/subitem3',
-    ],
+    ], */
     
 ];
 
@@ -45,14 +51,14 @@ return [
     'login_url' => config('app.url') . '/login',
     'menu' => [
         [
-            'text' => '<i class="fas fa-plus-square"></i> Cadastrar',
-            'url' => config('app.url') . '/records/create',
+            'text' => '<i class="fas fa-plus-square"></i> Cadastrar registro',
+            'url' => config('app.url') . 'records/create',
             /* 'can' => '', */
         ],
         [
-            'text' => 'SubMenu1',
+            'text' => 'CDD',
             'submenu' => $submenu1,
-            'can' => '',
+            /* 'can' => 'admin', */
         ],
         [
             'text' => 'SubMenu2',
