@@ -22,8 +22,8 @@ class RemissivaFactory extends Factory
     public function definition()
     {
         return [
-            'texto' => $this->faker->sentence(3),
-            'record_id' => $this->faker->numberBetween($min = 1, $max = 20),
+            'titulo' => $this->faker->sentence(3),
+            'termo_id' => $this->faker->numberBetween($min = 1, $max = 20),
         ];
     }
 }

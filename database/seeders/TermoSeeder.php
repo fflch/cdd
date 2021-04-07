@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Record;
+use App\Models\Termo;
 
-class RecordSeeder extends Seeder
+class TermoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,8 @@ class RecordSeeder extends Seeder
      */
     public function run()
     {   
-        $categorias = Record::categorias();
-        $record = [
+        $categorias = Termo::categorias();
+        $termo = [
             'assunto' => "ABELARDO, PEDRO, filósofo e teólogo escolástico francês 1079-1142",
             'enviado_para_sibi' => TRUE,
             'normalizado' => TRUE,
@@ -23,7 +23,7 @@ class RecordSeeder extends Seeder
             'classificacao' => "Seed",
             'categoria' => $categorias[2]
         ];
-        Record::create($record);
-        Record::factory(20)->create();
+        Termo::create($termo);
+        Termo::factory(20)->create();
     }
 }

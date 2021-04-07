@@ -5,7 +5,7 @@ use App\Models\Remissiva;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Record extends Model
+class Termo extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];

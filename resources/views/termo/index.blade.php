@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container-fluid">
-    <form method="get" action="/records">
-        @include('record.partials.search')
+    <form method="get" action="/termos">
+        @include('termo.partials.search')
     </form><br>
-        @forelse($records as $record)
-        @include('record.partials.fields')
+        @forelse($termos as $termo)
+        @include('termo.partials.fields')
         @empty
             <p>Não há registros cadastrados ainda.</p>
         @endforelse
