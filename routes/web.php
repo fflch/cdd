@@ -18,5 +18,4 @@ Route::resource('/cdd', CddController::class);
 Route::get('/', [IndexController::class,'index']);
 
 Route::post('/termos/addcdd/{termo}', [TermoController::class,'addCdd']);
-
 Route::delete('/termos/removecdd/{termo}/{cdd}', [TermoController::class,'removeUser']);

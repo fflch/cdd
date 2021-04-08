@@ -73,13 +73,3 @@
 </table>
 
 <br>
-
-@section('javascripts_bottom')
-<script>
-
-$(document).ready(function() {
-    $('.js-example-basic-single').select2();
-});
-
-</script>
-@endsection

@@ -130,14 +130,9 @@ class TermoController extends Controller
 
     public function addCdd(Request $request, Termo $termo) # WIP
     {
-
-        # Cria um objeto cdd
-        $cdd = new Cdd;
-        $cdd->cdd = $request->cdd;
-        $cdd->save();
-
-        # não pode existir na tabela categoria_users uma instância
-        # com o user_id e a categoria_id solicitados.
+        $cdd = Cdd::where('id',$request->cdd)->first();
+        $termo->cdds()->attach($cdd);
+        return redirect("/termos/$termo->id");
     }
 
     public function removeCdd(Request $request, Termo $termo, Cdd $cdd)

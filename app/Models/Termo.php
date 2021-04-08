@@ -22,4 +22,9 @@ class Termo extends Model
     {
         return $this->hasMany(Remissiva::class);
     }
+
+    public function cdds()
+    {
+        return $this->belongsToMany('App\Models\Cdd', 'cdd_termo')->withTimestamps();
+    }
 }

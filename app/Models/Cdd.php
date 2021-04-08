@@ -9,4 +9,9 @@ class Cdd extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function termos()
+    {
+        return $this->belongsToMany('App\Models\Termo', 'cdd_termo')->withTimestamps();
+    }
 }
