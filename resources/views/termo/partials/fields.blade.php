@@ -39,9 +39,6 @@
             <td><div class="font-weight-bold">Observação:</div>{{  $termo->observacao ?? ''  }}</td>      
         </tr>
         <tr>
-            <td><div class="font-weight-bold">Classificação:</div>{{  $termo->classificacao ?? ''  }}</td>      
-        </tr>
-        <tr>
             <td><div class="font-weight-bold">Categoria:</div>{{  $termo->categoria ?? ''  }}</td>      
         </tr>
         <tr>

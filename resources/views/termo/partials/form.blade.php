@@ -62,13 +62,6 @@
         </div>
         <div class="row">
             <div class="col-sm form-group">  
-                <b>Classificação</b>
-                <br>
-                <input class="form-control" type="text" name="classificacao" value="{{  old('classificacao', $termo->classificacao) }}">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm form-group">  
                 <b>Categoria</b>
                 <br>
                 <select class="form-control" name="categoria">

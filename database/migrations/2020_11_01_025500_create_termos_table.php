@@ -20,7 +20,6 @@ class CreateTermosTable extends Migration
             $table->boolean('enviado_para_sibi')->nullable();
             $table->boolean('normalizado')->nullable();
             $table->string('observacao')->nullable();
-            $table->string('classificacao')->nullable();
             $table->string('categoria')->nullable();
         });
     }

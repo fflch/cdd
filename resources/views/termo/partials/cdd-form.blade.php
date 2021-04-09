@@ -8,7 +8,7 @@
                     <option value="{{ $cdd->id }}">{{$cdd->cdd}}</option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-outline-success">Adicionar CDD</button>
+            <button type="submit" class="btn btn-outline-success btn-sm">Adicionar CDD</button>
         </li>
     </ul>
 </form>
