@@ -98,6 +98,6 @@ class CddController extends Controller
     {
         $cdd->delete();
         request()->session()->flash('alert-info','CDD excluído com sucesso.');
-        return redirect('/cdd');
+        return redirect('/');
     }
 }
