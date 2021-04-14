@@ -6,6 +6,7 @@ use App\Models\Termo;
 use App\Models\Cdd;
 use Illuminate\Http\Request;
 use App\Http\Requests\TermoRequest;
+use Illuminate\Database\Eloquent\Builder;
 
 class TermoController extends Controller
 {
@@ -15,10 +16,17 @@ class TermoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function search(Request $request) 
+    private function search(Request $request) 
     {
-        if(isset(request()->busca_assunto)) {
-            $termos = Termo::where('assunto', 'LIKE',"%{$request->busca_assunto}%")->paginate(10);
+        $termos = Termo::whereHas('remissivas', function (Builder $query) use ($request){
+            $query->where('titulo','LIKE',"%{$request->search}%");
+        })
+        ->Orwhere('assunto', 'LIKE',"%{$request->search}%")
+        ->paginate(5);
+
+        #$request->search
+        /*if(isset(request()->busca_assunto)) {
+            
 
         } else if(isset(request()->busca_observacao)) {
             $termos = Termo::where('observacao', 'LIKE',"%{$request->busca_observacao}%")->paginate(10);
@@ -35,13 +43,18 @@ class TermoController extends Controller
         } else {
             $termos = Termo::paginate(20);  
         }
+        */
 
         return $termos;
     } 
 
     public function index(Request $request)
     {
-        $termos =  $this->search($request);
+        if($request->search) {
+            $termos = $this->search($request);
+        } else {
+            $termos = Termo::paginate(5);
+        }
         return view('index',[
             'termos' => $termos,
         ]);
@@ -54,6 +67,7 @@ class TermoController extends Controller
      */
     public function create()
     {
+        $this->authorize('admin');
         return view('termo.create',[
             'termo' => new termo,
         ]);
@@ -67,6 +81,7 @@ class TermoController extends Controller
      */
     public function store(TermoRequest $request)
     {   
+        $this->authorize('admin');
         $validated = $request->validated();
         $termo = Termo::create($validated);
         request()->session()->flash('alert-info','Registro cadastrado com sucesso');
@@ -94,6 +109,7 @@ class TermoController extends Controller
      */
     public function edit(Termo $termo)
     {
+        $this->authorize('admin');
         return view('termo.edit',[
             'termo' => $termo
         ]);

@@ -20,6 +20,12 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $userSenhaUnica = Socialite::driver('senhaunica')->user();
+
+        if(!in_array($userSenhaUnica->codpes, explode(',',env('ADMINS')))){
+            request()->session()->flash('alert-danger', "Você não tem permissão de usar o sistema");
+            return redirect ('/');
+        }
+
         $user = User::where('codpes',$userSenhaUnica->codpes)->first();
 
         if (is_null($user)) $user = new User;

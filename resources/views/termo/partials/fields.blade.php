@@ -49,8 +49,10 @@
                     @include('termo.partials.remissiva-show')
                 </ul>
                 <br>
-                <div class="font-weight-bold">Adicionar remissiva</div>
-                @include('termo.partials.remissiva-form')
+                @can('admin')
+                    <div class="font-weight-bold">Adicionar remissiva</div>
+                    @include('termo.partials.remissiva-form')
+                @endcan
             </td>      
         </tr>
         <tr>

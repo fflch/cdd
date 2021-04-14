@@ -10,5 +10,6 @@
         @empty
             <p>Não há registros cadastrados ainda.</p>
         @endforelse
+        
 </div>
 @endsection

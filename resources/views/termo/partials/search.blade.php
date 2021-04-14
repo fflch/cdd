@@ -14,13 +14,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-sm input-group">
-                <input type="text" class="form-control" id="input_busca_assunto" name="busca_assunto" type="text" placeholder="Assunto ou Remissiva" value="{{ request()->busca_assunto }}" disabled>
-            </div>
-            <div class="col-sm input-group">
-                <input type="text" class="form-control" id="input_busca_cdd" name="busca_cdd" type="text" placeholder="CDD" value="{{ request()->busca_cdd }}" disabled>
-            </div>
-            <div class="col-sm input-group">
-                <input type="text" class="form-control" id="input_busca_observacao" name="busca_observacao" type="text" placeholder="Observação" value="{{ request()->busca_observacao }}" disabled>
+                <input type="text" class="form-control" name="search" type="text" value="{{ request()->search }}" >
             </div>
         </div>
         <br>
