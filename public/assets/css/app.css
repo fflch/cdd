@@ -19,3 +19,7 @@
 #remissiva-add {
     border-color: white;
 }
+
+#radio-bool {
+    max-width: 13vh;
+}

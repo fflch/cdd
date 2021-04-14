@@ -14,7 +14,6 @@ Os recursos atualmente implementados são:
   - Enviado para SIBI;
   - Normalizado;
   - Observação;
-  - Classificação;
   - Categoria;
   - Remissivas.
 

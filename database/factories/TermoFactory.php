@@ -26,7 +26,6 @@ class TermoFactory extends Factory
             'enviado_para_sibi' => array_rand([TRUE, FALSE]),
             'normalizado' => array_rand([TRUE, FALSE]),
             'observacao' => $this->faker->text(100),
-            'classificacao' => $this->faker->word,
             'categoria' => $categorias[array_rand($categorias)],
         ];
     }

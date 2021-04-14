@@ -20,7 +20,6 @@ class TermoSeeder extends Seeder
             'enviado_para_sibi' => TRUE,
             'normalizado' => TRUE,
             'observacao' => "189.4 A139",
-            'classificacao' => "Seed",
             'categoria' => $categorias[2]
         ];
         Termo::create($termo);

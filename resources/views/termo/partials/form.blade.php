@@ -14,38 +14,50 @@
             <div class="col-sm form-group">  
                 <b>Enviado para SIBI</b>
                 <br>
-                <input type="radio" name="enviado_para_sibi" value="1" @if (isset($termo->enviado_para_sibi) and ($termo->enviado_para_sibi === 1))
-                                checked
-                            @elseif ((old('enviado_para_sibi') != null) and (old('fixarip') == 1))
-                                checked
-                @endif>Sim<br>
-
-                <input type="radio" name="enviado_para_sibi" value="0" @if (isset($termo->enviado_para_sibi) and ($termo->enviado_para_sibi === 0))
+                <div class="card" id="radio-bool">
+                    <div class="card-body">
+                        <input type="radio" name="enviado_para_sibi" value="1"
+                        @if (isset($termo->enviado_para_sibi) and ($termo->enviado_para_sibi === 1))
+                                        checked
+                                    @elseif ((old('enviado_para_sibi') != null) and (old('fixarip') == 1))
+                                        checked
+                        @endif> Sim
+                    </div>
+                </div>
+                <div class="card" id="radio-bool">
+                    <div class="card-body">
+                        <input type="radio" name="enviado_para_sibi" value="0"
+                        @if (isset($termo->enviado_para_sibi) and ($termo->enviado_para_sibi === 0))
                                 checked
                             @elseif ((old('enviado_para_sibi') != null) and (old('fixarip') == 0))
                                 checked
-                @endif>Não<br>
+                            @endif> Não  
+                    </div>
+                </div>
             </div>
             <div class="col-sm form-group">  
                 <b>Normalizado</b>
                 <br>
-                <input type="radio" name="normalizado" value="1" @if (isset($termo->normalizado) and ($termo->normalizado === 1))
-                                checked
-                            @elseif ((old('normalizado') != null) and (old('fixarip') == 1))
-                                checked
-                @endif>Sim<br>
-                <input type="radio" name="normalizado" value="0" @if (isset($termo->normalizado) and ($termo->normalizado === 0))
+                <div class="card" id="radio-bool">
+                    <div class="card-body">
+                        <input type="radio" name="normalizado" value="1"
+                            @if (isset($termo->normalizado) and ($termo->normalizado === 1))
+                                    checked
+                                @elseif ((old('normalizado') != null) and (old('fixarip') == 1))
+                                    checked
+                                @endif> Sim
+                    </div>
+                </div>
+                <div class="card" id="radio-bool">
+                    <div class="card-body">
+                    <input type="radio" name="normalizado" value="0" 
+                        @if (isset($termo->normalizado) and ($termo->normalizado === 0))
                                 checked
                             @elseif ((old('normalizado') != null) and (old('fixarip') == 0))
                                 checked
-                @endif>Não<br>            
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm form-group">  
-                <b>Classificação</b>
-                <br>
-                <input class="form-control" type="text" name="classificacao" value="{{  old('classificacao', $termo->classificacao) }}">
+                            @endif> Não
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
