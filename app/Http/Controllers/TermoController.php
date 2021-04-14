@@ -128,7 +128,7 @@ class TermoController extends Controller
         return redirect('/');
     }
 
-    public function addCdd(Request $request, Termo $termo) # WIP
+    public function addCdd(Request $request, Termo $termo)
     {
         $cdd = Cdd::where('id',$request->cdd)->first();
         $termo->cdds()->attach($cdd);
@@ -138,9 +138,9 @@ class TermoController extends Controller
     public function removeCdd(Request $request, Termo $termo, Cdd $cdd)
     {    
 
-        $termos->cdds()->detach($cdd->id);
-        request()->session()->flash('alert-danger', "{$cdd->cdd} foi excluído(a) de {$termos->assunto}");
-        return redirect("/termos/{$termos->id}");
+        $termo->cdds()->detach($cdd->id);
+        request()->session()->flash('alert-danger', "{$cdd->cdd} foi excluído(a) de {$termo->assunto}");
+        return redirect("/termos/{$termo->id}");
     }
     
 }
