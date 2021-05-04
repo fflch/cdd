@@ -29,9 +29,9 @@
             </div>
             <div class="col-sm input-group" id="query-select-group">
                 <span><b>Enviado para Sibi</b></span>
-                <select class="form-select" id="input_busca_enviado_para_sibi" name="busca_enviado_para_sibi" disabled>
-                    <option value="1">Sim</option>
-                    <option value="0">Não</option>
+                <select class="form-select" id="enviado_para_sibi" name="enviado_para_sibi">
+                    <option value="1" @if( request()->enviado_para_sibi == 1) selected @endif>Sim</option>
+                    <option value="0" @if( request()->enviado_para_sibi == 0) selected @endif>Não</option>
                 </select>
             </div>
             <div class="col-sm input-group" id="query-select-group">

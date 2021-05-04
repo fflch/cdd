@@ -18,32 +18,38 @@ class TermoController extends Controller
 
     private function search(Request $request) 
     {
-        $termos = Termo::whereHas('remissivas', function (Builder $query) use ($request){
-            $query->where('titulo','LIKE',"%{$request->search}%");
-        })
-        ->Orwhere('assunto', 'LIKE',"%{$request->search}%")
-        ->paginate(5);
+        /*
+         * Campo da caixa de busca:
+         * Model: Termo      campos: assunto
+         * Model: Remissiva  campos: titulo
+         * Model: Cdd        campos: cdd
+         * 
+         * Outros filtros exclusivos no model Termo:
+         * - enviado_para_sibi
+         * - normalizado
+         * - categoria
+         */
 
-        #$request->search
-        /*if(isset(request()->busca_assunto)) {
+        $termos = Termo::where(function( $query ) use ( $request ){
+            # Model: Termo      campos: assunto
+            $query->where('assunto', 'LIKE',"%{$request->search}%")
+
+            # Model: Remissiva  campos: titulo
+            ->orWhereHas('remissivas', function (Builder $query) use ($request){
+                $query->where('titulo','LIKE',"%{$request->search}%");
+            })
             
+            # Model: Cdd        campos: cdd
+            ->orWhereHas('cdds', function (Builder $query) use ($request){
+                $query->where('cdd','LIKE',"%{$request->search}%");
+            }); 
+        });
 
-        } else if(isset(request()->busca_observacao)) {
-            $termos = Termo::where('observacao', 'LIKE',"%{$request->busca_observacao}%")->paginate(10);
-        
-        } else if(isset(request()->busca_categoria)) {
-            $termos = Termo::where('categoria', 'LIKE',"%{$request->busca_categoria}%")->paginate(10);
-        
-        } else if(isset(request()->busca_enviado_para_sibi)) {
-            $termos = Termo::where('enviado_para_sibi', 'LIKE',"%{$request->busca_enviado_para_sibi}%")->paginate(10);
-
-        } else if(isset(request()->busca_normalizado)) {
-            $termos = Termo::where('normalizado', 'LIKE',"%{$request->busca_normalizado}%")->paginate(10);
-
-        } else {
-            $termos = Termo::paginate(20);  
+        if($request->enviado_para_sibi){
+            $termos = $termos->Where('enviado_para_sibi',1);
         }
-        */
+        
+        $termos = $termos->paginate(5);
 
         return $termos;
     } 
