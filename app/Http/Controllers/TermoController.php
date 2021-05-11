@@ -16,7 +16,7 @@ class TermoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    private function search(Request $request) 
+    public function index(Request $request)
     {
         /*
          * Campo da caixa de busca:
@@ -30,20 +30,24 @@ class TermoController extends Controller
          * - categoria
          */
 
-        $termos = Termo::where(function( $query ) use ( $request ){
-            # Model: Termo      campos: assunto
-            $query->where('assunto', 'LIKE',"%{$request->search}%")
+        $termos = new Termo;
 
-            # Model: Remissiva  campos: titulo
-            ->orWhereHas('remissivas', function (Builder $query) use ($request){
-                $query->where('titulo','LIKE',"%{$request->search}%");
-            })
-            
-            # Model: Cdd        campos: cdd
-            ->orWhereHas('cdds', function (Builder $query) use ($request){
-                $query->where('cdd','LIKE',"%{$request->search}%");
-            }); 
-        });
+        if($request->search) {
+            $termos = $termos->where(function( $query ) use ( $request ){
+                # Model: Termo      campos: assunto
+                $query->where('assunto', 'LIKE',"%{$request->search}%")
+
+                # Model: Remissiva  campos: titulo
+                ->orWhereHas('remissivas', function (Builder $query) use ($request){
+                    $query->where('titulo','LIKE',"%{$request->search}%");
+                })
+                
+                # Model: Cdd        campos: cdd
+                ->orWhereHas('cdds', function (Builder $query) use ($request){
+                    $query->where('cdd','LIKE',"%{$request->search}%");
+                }); 
+            });
+        }
 
         # Flag Enviado para Sibi
         if ($request->enviado_para_sibi == "1"){
@@ -65,21 +69,11 @@ class TermoController extends Controller
         }
 
         $termos = $termos->paginate(5);
-        return $termos;
-    } 
-
-    public function index(Request $request)
-    {
-        if($request->search) {
-            $termos = $this->search($request);
-        } else {
-            $termos = Termo::paginate(5);
-        }
 
         return view('termo.index',[
             'termos' => $termos,
         ]);
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.

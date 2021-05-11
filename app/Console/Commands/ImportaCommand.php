@@ -72,15 +72,14 @@ class ImportaCommand extends Command
             }
 
             if(!empty($row[1])){
-                $cdd = new Cdd;
-                $cdd->cdd = $row[1];
-                $cdd->save();
-
-                # tabela pivot
-                /* $cdd_termo = new CddTermo
-                $cdd_termo->cdd_id = $cdd->id;
-                $cdd_termo->termo_id = $termo->id;
-                $cdd_termo->save(); */
+                # verifica se ele já existe
+                $cdd = Cdd::where('cdd',$row[1])->first();
+                if(!$cdd) {
+                    $cdd = Cdd::create(['cdd' => $row[1]]);
+                } 
+                
+                $termo->cdds()->attach($cdd);
+                $termo->save();
             }
         }
 

@@ -20,7 +20,7 @@ $menu = [
     ],
     [
         'text' => '<i class="fas fa-list"></i> Índice CDD',
-        'url' => config('app.url') . '/cdd',
+        'submenu' => $cdd
 
     ],
 ];
@@ -46,5 +46,5 @@ return [
     'logout_url' => config('app.url') . '/logout',
     'login_url' => config('app.url') . '/login',
     'menu' => $menu,
-    'right_menu' => $right_menu,
+   # 'right_menu' => $right_menu,
 ];
