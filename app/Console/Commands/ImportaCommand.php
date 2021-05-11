@@ -77,10 +77,10 @@ class ImportaCommand extends Command
                 $cdd->save();
 
                 # tabela pivot
-                $cdd_termo = new CddTermo
+                /* $cdd_termo = new CddTermo
                 $cdd_termo->cdd_id = $cdd->id;
                 $cdd_termo->termo_id = $termo->id;
-                $cdd_termo->save();
+                $cdd_termo->save(); */
             }
         }
 
