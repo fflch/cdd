@@ -4,12 +4,14 @@
             <th scope="col">
                 <div class="termo_header">
                     <div class="text-uppercase">{{  $termo->assunto ?? ''  }}</div>
+                    @can('admin')
                     <form action="/termos/{{  $termo->id  }}" method="POST">
                         <a class="btn btn-outline-success" href="/termos/{{  $termo->id  }}/edit" role="button">Editar</a>
                         @csrf
                         @method('delete')
                         <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Tem certeza?');">Apagar</button> 
                     </form>
+                    @endcan
                 </div>
             </th>
         </tr>
@@ -62,10 +64,12 @@
                 <ul class="list-group">
                     @include('termo.partials.cdd-show')
                 </ul>
+                @can('admin')
                 <br>
                 <div class="font-weight-bold">Adicionar CDD</div>
                 <br>
                 @include('termo.partials.cdd-form')
+                @endcan
             </td>      
         </tr>
     </tbody>

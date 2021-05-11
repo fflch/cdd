@@ -5,11 +5,11 @@
     <form method="get" action="/termos">
         @include('termo.partials.search')
     </form><br>
+    {{ $termos->appends(request()->query())->links() }}  
         @forelse($termos as $termo)
         @include('termo.partials.fields')
         @empty
             <p>Não há registros cadastrados ainda.</p>
         @endforelse
-        
 </div>
 @endsection
