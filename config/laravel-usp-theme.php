@@ -8,6 +8,7 @@ $cdd = [
     [
         'text' => '<i class="fas fa-plus"></i>  Cadastrar CDD',
         'url' => config('app.url') . '/cdd/create',
+        'can' => 'admin',
     ],
 ];
 
@@ -15,14 +16,16 @@ $menu = [
     [
         'text' => '<i class="fas fa-plus-square"></i> Cadastrar registro',
         'url' => config('app.url') . '/termos/create',
+        'can' => 'admin',
     ],
     [
-        'text' => 'CDD',
-        'submenu' => $cdd,
+        'text' => '<i class="fas fa-list"></i> Índice CDD',
+        'url' => config('app.url') . '/cdd',
+
     ],
 ];
 
-$right_menu = [
+/* $right_menu = [
     [
         'text' => '<i class="fas fa-cog"></i>',
         'title' => 'Configurações',
@@ -30,7 +33,7 @@ $right_menu = [
         'url' => config('app.url') . '/',
         'align' => 'right',
     ],
-];
+]; */
 
 # dashboard_url renomeado para app_url
 # USPTHEME_SKIN deve ser colocado no .env da aplicação 

@@ -45,12 +45,26 @@ class TermoController extends Controller
             }); 
         });
 
-        if($request->enviado_para_sibi){
-            $termos = $termos->Where('enviado_para_sibi',1);
+        # Flag Enviado para Sibi
+        if ($request->enviado_para_sibi == "1"){
+            $termos = $termos->where('enviado_para_sibi',1);
+        } elseif ($request->enviado_para_sibi == "0") {
+            $termos = $termos->where('enviado_para_sibi',0);
         }
-        
-        $termos = $termos->paginate(5);
 
+        # Flag Normalizado
+        if ($request->normalizado == "1"){
+            $termos = $termos->where('normalizado',1);
+        } elseif ($request->normalizado == "0") {
+            $termos = $termos->where('normalizado',0);
+        }
+
+        # Flag categoria
+        if ($request->categoria){
+            $termos = $termos->where('categoria','LIKE',"%{$request->categoria}%");
+        }
+
+        $termos = $termos->paginate(5);
         return $termos;
     } 
 
@@ -61,7 +75,8 @@ class TermoController extends Controller
         } else {
             $termos = Termo::paginate(5);
         }
-        return view('index',[
+
+        return view('termo.index',[
             'termos' => $termos,
         ]);
     }
@@ -130,7 +145,7 @@ class TermoController extends Controller
      */
     public function update(TermoRequest $request, Termo $termo)
     {
-
+        $this->authorize('admin');
         $validated = $request->validated();
         $termo->update($validated);
         request()->session()->flash('alert-info','Registro atualizado com sucesso');
@@ -145,6 +160,7 @@ class TermoController extends Controller
      */
     public function destroy(Termo $termo)
     {
+        $this->authorize('admin');
         $termo->delete();
         request()->session()->flash('alert-info','Registro excluído com sucesso.');
         return redirect('/');
@@ -152,6 +168,7 @@ class TermoController extends Controller
 
     public function addCdd(Request $request, Termo $termo)
     {
+        $this->authorize('admin');
         $cdd = Cdd::where('id',$request->cdd)->first();
         $termo->cdds()->attach($cdd);
         return redirect("/termos/$termo->id");
@@ -159,7 +176,7 @@ class TermoController extends Controller
 
     public function removeCdd(Request $request, Termo $termo, Cdd $cdd)
     {    
-
+        $this->authorize('admin');
         $termo->cdds()->detach($cdd->id);
         request()->session()->flash('alert-danger', "{$cdd->cdd} foi excluído(a) de {$termo->assunto}");
         return redirect("/termos/{$termo->id}");
