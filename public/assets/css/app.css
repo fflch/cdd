@@ -23,3 +23,11 @@
 #radio-bool {
     max-width: 13vh;
 }
+
+#card-form {
+    margin-top: 3vh;
+}
+
+#return-button {
+    margin-bottom: 3vh;
+}

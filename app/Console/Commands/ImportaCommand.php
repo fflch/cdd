@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Termo;
 use App\Models\Remissiva;
-# Namespace da tabela pivot
+use App\Models\Cdd;
 
 class ImportaCommand extends Command
 {
@@ -40,7 +40,8 @@ class ImportaCommand extends Command
      */
     public function handle()
     {
-        $csv = array_map('str_getcsv', file('DATA-EXPORT/cdd.csv'));
+        echo("Iniciando importação...\n");
+        $csv = array_map('str_getcsv', file('/home/devvyr/work/cdd/DATA-EXPORT/cdd_normalizado.csv'));
         foreach($csv as $row){
             $termo = new Termo;
             $termo->assunto = $row[0];
@@ -66,9 +67,10 @@ class ImportaCommand extends Command
             $termo->save();
 
             if(!empty($row[7])){
-                $remissa = new Remissiva;
-                $remissa->titulo = $row[7];
-                $remissa->termo_id = $termo->id;
+                $remissiva = new Remissiva;
+                $remissiva->titulo = $row[7];
+                $remissiva->termo_id = $termo->id;
+                $remissiva->save();
             }
 
             if(!empty($row[1])){
@@ -82,7 +84,7 @@ class ImportaCommand extends Command
                 $termo->save();
             }
         }
-
+        echo("Importação completa.\n");
         return 0;
     }
 }

@@ -14,9 +14,9 @@
                 <span><b>Categoria</b></span>
                 <select class="form-select" name="categoria">
                     <option selected value="">--Selecione--</option>
-                    <option value="Assunto">Assunto</option>
-                    <option value="Coleção">Coleção</option>
-                    <option value="Autor">Autor</option>
+                    <option value="Assunto" @if( request()->categoria == "Assunto") selected @endif>Assunto</option>
+                    <option value="Coleção" @if( request()->categoria == "Coleção") selected @endif>Coleção</option>
+                    <option value="Autor" @if( request()->categoria == "Autor") selected @endif>Autor</option>
                 </select>
             </div>
             <div class="col-sm input-group" id="query-select-group">

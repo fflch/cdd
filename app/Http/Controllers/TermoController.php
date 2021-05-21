@@ -68,7 +68,7 @@ class TermoController extends Controller
             $termos = $termos->where('categoria','LIKE',"%{$request->categoria}%");
         }
 
-        $termos = $termos->paginate(5);
+        $termos = $termos->orderBy('assunto', 'asc')->paginate(10);
 
         return view('termo.index',[
             'termos' => $termos,
