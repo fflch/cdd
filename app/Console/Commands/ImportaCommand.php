@@ -67,9 +67,10 @@ class ImportaCommand extends Command
             $termo->save();
 
             if(!empty($row[7])){
-                $remissa = new Remissiva;
-                $remissa->titulo = $row[7];
-                $remissa->termo_id = $termo->id;
+                $remissiva = new Remissiva;
+                $remissiva->titulo = $row[7];
+                $remissiva->termo_id = $termo->id;
+                $remissiva->save();
             }
 
             if(!empty($row[1])){
