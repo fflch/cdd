@@ -4,10 +4,12 @@ namespace App\Models;
 use App\Models\Remissiva;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Termo extends Model
+class Termo extends Model implements Auditable
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
     protected $guarded = ['id'];
 
     public static function categorias(){
