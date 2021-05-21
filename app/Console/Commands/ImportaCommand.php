@@ -41,7 +41,7 @@ class ImportaCommand extends Command
     public function handle()
     {
         echo("Iniciando importação...\n");
-        $csv = array_map('str_getcsv', file('/home/devvyr/work/cdd/DATA-EXPORT/cdd_normalizado.csv'));
+        $csv = array_map('str_getcsv', file(base_path() . '/DATA-EXPORT/cdd_normalizado.csv'));
         foreach($csv as $row){
             $termo = new Termo;
             $termo->assunto = $row[0];

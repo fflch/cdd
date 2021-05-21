@@ -13,3 +13,4 @@ yarn-error.log
 /public/vendor/
 
 .ipynb_checkpoints
+storage/debugbar/
