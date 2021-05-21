@@ -20,7 +20,8 @@ $menu = [
     ],
     [
         'text' => '<i class="fas fa-list"></i> Índice CDD',
-        'submenu' => $cdd
+        'submenu' => $cdd,
+        'can' => 'admin',
 
     ],
 ];

@@ -33,7 +33,7 @@ class RemissivaController extends Controller
         $this->authorize('admin');
         $termo_id = $remissiva->termo_id;
         $remissiva->delete();
-        request()->session()->flash('alert-info','Remissiva excluída com sucesso.');
+        request()->session()->flash('alert-danger','Remissiva foi excluída.');
         return redirect("/termos/{$termo_id}");
     }
 }

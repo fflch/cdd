@@ -40,7 +40,7 @@ class ImportaCommand extends Command
      */
     public function handle()
     {
-        $csv = array_map('str_getcsv', file('DATA-EXPORT/cdd.csv'));
+        $csv = array_map('str_getcsv', file('DATA-EXPORT/cdd_normalizado.csv'));
         foreach($csv as $row){
             $termo = new Termo;
             $termo->assunto = $row[0];
