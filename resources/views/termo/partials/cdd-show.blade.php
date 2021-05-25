@@ -6,7 +6,7 @@
             @csrf 
             @method('delete')
             <br>
-            <button type="submit" class="btn btn-outline-danger btn-sm">Apagar</button>
+            <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Tem certeza?');">Apagar</button> 
         </form>
         @endcan
     </li>
