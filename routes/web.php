@@ -13,14 +13,8 @@ Route::resource('/remissivas', RemissivaController::class);
 
 Route::resource('/cdd', CddController::class);
 
-
-
 Route::post('/termos/addcdd/{termo}', [TermoController::class,'addCdd']);
 Route::delete('/termos/removecdd/{termo}/{cdd}', [TermoController::class,'removeCdd']);
-
-/* Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-Route::post('logout', [LoginController::class, 'logout']); */
 
 Route::get('login', [LoginController::class, 'redirectToProvider']);
 Route::get('callback', [LoginController::class, 'handleProviderCallback']);
