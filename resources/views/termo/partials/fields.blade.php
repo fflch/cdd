@@ -9,27 +9,11 @@
     <td>
         <ul class="list-group">
             @include('termo.partials.remissiva-show')
-            @can('admin')
-            <div class="card" id="card-form">
-                <div class="card-header">
-                    <div class="font-weight-bold">Adicionar remissiva</div>
-                </div>
-                @include('termo.partials.remissiva-form')
-            </div>
-            @endcan
         </ul>
     </td>
     <td>
         <ul class="list-group">
             @include('termo.partials.cdd-show')
-            @can('admin')
-            <div class="card" id="card-form">
-                <div class="card-header">
-                    <div class="font-weight-bold">Adicionar CDD</div>
-                </div>
-                @include('termo.partials.cdd-form')
-            </div>
-            @endcan
         </ul>
     </td>
     <td>{{  $termo->categoria ?? ''  }}</td>

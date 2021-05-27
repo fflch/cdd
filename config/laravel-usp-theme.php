@@ -2,7 +2,7 @@
 
 $cdd = [
     [
-        'text' => '<i class="fas fa-list"></i> Índice CDD',
+        'text' => '<i class="fas fa-list"></i> Listar',
         'url' => config('app.url') . '/cdd',
     ],
     [
@@ -19,7 +19,7 @@ $menu = [
         'can' => 'admin',
     ],
     [
-        'text' => '<i class="fas fa-list"></i> Índice CDD',
+        'text' => 'Índice CDD',
         'submenu' => $cdd,
         'can' => 'admin',
 

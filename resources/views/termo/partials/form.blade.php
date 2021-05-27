@@ -1,6 +1,9 @@
 <div class="card">
     <div class="card-header">
-        <b>{{ $param ?? '' }}</b>
+        <a href="/termos/{{ $termo->id }}">
+            <i class="fas fa-chevron-circle-left"></i>
+        </a>        </a>
+        <b>{{ $param ?? '' }}</b> 
     </div>
     <div class="card-body">
         <div class="row">
@@ -71,8 +74,5 @@
             </div>
         </div>
         <button type="submit" class="btn btn-outline-success">Enviar</button>
-        <a class="btn btn-outline-dark" href="/" role="button">
-            <i class="fas fa-arrow-left"></i> Voltar
-        </a>
     </div>
 </div>

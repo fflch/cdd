@@ -11,11 +11,6 @@
     padding-right: 10px;
 }
 
-#remissiva-list, #remissiva-add {
-    display: flex;
-    justify-content: space-between;
-}
-
 #remissiva-add {
     border-color: white;
 }
@@ -30,4 +25,18 @@
 
 #return-button {
     margin-bottom: 3vh;
+}
+
+#space-between{
+    display: flex;
+    justify-content: space-between;
+}
+
+#start {
+    display: flex;
+    justify-content: start;
+}
+
+#edit-icon {
+    margin-left: 1.5vh;
 }
