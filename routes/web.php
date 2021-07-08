@@ -20,3 +20,5 @@ Route::get('login', [LoginController::class, 'redirectToProvider']);
 Route::get('callback', [LoginController::class, 'handleProviderCallback']);
 Route::post('logout', [LoginController::class, 'logout']);
 
+# Logs  
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('can:admin');

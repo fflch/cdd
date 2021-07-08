@@ -26,6 +26,17 @@ $menu = [
     ],
 ];
 
+$right_menu = [
+    [
+        'text' => '<i class="fas fa-hard-hat"></i>',
+        'title' => 'Logs',
+        'target' => '_blank',
+        'url' => config('app.url') . '/logs',
+        'align' => 'right',
+        'can' => 'admin',
+    ],
+];
+
 /* $right_menu = [
     [
         'text' => '<i class="fas fa-cog"></i>',
@@ -47,5 +58,5 @@ return [
     'logout_url' => config('app.url') . '/logout',
     'login_url' => config('app.url') . '/login',
     'menu' => $menu,
-   # 'right_menu' => $right_menu,
+    'right_menu' => $right_menu,
 ];
