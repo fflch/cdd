@@ -24,10 +24,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
         Gate::define('admin', function ($user) {
-            // No LoginController só permite logins de admin
-            return true;
+            return false;
+            $admins = explode(',', trim(env('SENHAUNICA_ADMINS')));
+            return ( in_array($user->username, $admins) and $user->username );
         });
     }
 }

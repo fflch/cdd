@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "barryvdh/laravel-debugbar": "^3.5",
-        "doctrine/dbal": "^2.12",
+        "doctrine/dbal": "^3.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -21,7 +21,7 @@
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "uspdev/laravel-usp-faker": "^1.0",
         "uspdev/laravel-usp-theme": "^2.0",
-        "uspdev/senhaunica-socialite": "^2.0"
+        "uspdev/senhaunica-socialite": "^4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

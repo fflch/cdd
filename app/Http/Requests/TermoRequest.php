@@ -30,6 +30,8 @@ class TermoRequest extends FormRequest
             'categoria' => 'nullable',
             'enviado_para_sibi' => 'required',
             'normalizado' => 'required',
+            'cdds' => 'nullable',
+            'remissivas' => 'nullable',
         ];
         return $rules;
     }

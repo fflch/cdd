@@ -6,7 +6,7 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item" ><h6>CDD</h6><a href="/cdd/{{$cdd->id}}">{{  $cdd->cdd ?? ''  }}</a></li>  
         </ul>
-        @can('admin')
+        @can('admins')
         </br>
         <div class="col-sm form-group">
             <form action="/cdd/{{  $cdd->id  }}" method="POST">

@@ -16,7 +16,7 @@ class RemissivaController extends Controller
      */
     public function store(RemissivaRequest $request)
     {
-        $this->authorize('admin');
+        $this->authorize('admins');
         $validated = $request->validated();
         $remissiva = Remissiva::create($validated);
         request()->session()->flash('alert-info','Remissiva adicionada com sucesso');
@@ -30,7 +30,7 @@ class RemissivaController extends Controller
      */
     public function destroy(Remissiva $remissiva)
     {
-        $this->authorize('admin');
+        $this->authorize('admins');
         $termo_id = $remissiva->termo_id;
         $remissiva->delete();
         request()->session()->flash('alert-danger','Remissiva foi excluída.');

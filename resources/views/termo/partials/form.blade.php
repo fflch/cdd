@@ -10,9 +10,11 @@
             <div class="col-sm form-group">
                 <b>Assunto</b>
                 <br>
+                
                 <input class="form-control" type="text" name="assunto" value="{{  old('assunto', $termo->assunto) }}" >
             </div>
         </div>
+
         <div class="row">
             <div class="col-sm form-group">
                 <b>Enviado para SIBI</b>
@@ -73,6 +75,18 @@
                 <input type="text" class="form-control" name="observacao" value="{{  old('observacao', $termo->observacao) }}"></textarea>
             </div>
         </div>
+
+        <div class="row">
+          <div class="col-sm form-group">
+            <b>Remissivas</b><br>
+            @include('termo.partials.remissiva-form')
+          </div>
+          <div class="col-sm form-group">
+            <b>CDDs:</b><br>
+            @include('termo.partials.cdd-form')
+          </div>
+        </div>
+
         <button type="submit" class="btn btn-outline-success">Enviar</button>
     </div>
 </div>

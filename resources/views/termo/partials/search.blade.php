@@ -1,14 +1,6 @@
 <div class="card">
-    <div class="card-header">
-        <span><b>Busca</b></span>
-    </div>
+
     <div class="card-body">
-        <div class="row">
-            <div class="col-sm input-group">
-                <input type="text" class="form-control" name="search" type="text" placeholder="Digite o assunto, a remissiva ou o cdd..." value="{{ request()->search }}" >
-            </div>
-        </div>
-        <br>
         <div class="row">
             <div class="col-sm input-group" id="query-select-group">
                 <span><b>Categoria</b></span>
@@ -35,14 +27,16 @@
                     <option value="0"  @if( request()->normalizado == "0") selected @endif>Não</option>
                 </select>
             </div>
+
         </div>
-        <br>
         <div class="row">
             <div class="col-sm input-group">
+                <input type="text" class="form-control" name="search" type="text" placeholder="Digite o assunto, a remissiva ou o cdd..." value="{{ request()->search }}" >
                 <span class="input-group-btn">
-                    <button type="submit" class="btn btn-success">Buscar</button>
+                        <button type="submit" class="btn btn-success">Buscar</button>
                 </span>
             </div>
+
         </div>
     </div>
 </div>

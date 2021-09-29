@@ -1,7 +1,7 @@
 <tr>
     <td>
-        @can('admin')
-            <a href="/termos/{{ $termo->id }}">{{  $termo->assunto ?? ''  }}</a>
+        @can('admins')
+            <a href="/termos/{{ $termo->id }}/edit">{{  $termo->assunto ?? ''  }}</a>
         @else
             {{  $termo->assunto ?? ''  }}
         @endcan

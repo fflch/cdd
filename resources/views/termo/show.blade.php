@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="card">
     <div class="card-header" id="start">
-      @can('admin')
+      @can('admins')
         <a href="/">
           <i class="fas fa-chevron-circle-left"></i>
         </a>
@@ -23,18 +23,6 @@
         @include('termo.partials.table-row-headers')
         @include('termo.partials.fields')
       </table>
-      @can('admin')
-        <div class="row">
-          <div class="col-sm form-group">
-            <b>Adicionar Remissiva</b>
-            @include('termo.partials.remissiva-form')
-          </div>
-          <div class="col-sm form-group">
-            <b>Adicionar CDD</b>
-            @include('termo.partials.cdd-form')
-          </div>
-        </div>
-      @endcan
     </div>
   </div>
 </div>

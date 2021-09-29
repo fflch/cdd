@@ -8,22 +8,22 @@ $cdd = [
     [
         'text' => '<i class="fas fa-plus"></i>  Cadastrar CDD',
         'url' => config('app.url') . '/cdd/create',
-        'can' => 'admin',
+        'can' => 'admins',
     ],
 ];
 
 $menu = [
     [
-        'text' => '<i class="fas fa-plus-square"></i> Cadastrar registro',
+        'text' => '<i class="fas fa-plus-square"></i> Cadastrar novo registro',
         'url' => config('app.url') . '/termos/create',
         'can' => 'admin',
     ],
-    [
+    /*[
         'text' => 'Índice CDD',
         'submenu' => $cdd,
         'can' => 'admin',
 
-    ],
+    ],*/
 ];
 
 $right_menu = [
@@ -33,7 +33,15 @@ $right_menu = [
         'target' => '_blank',
         'url' => config('app.url') . '/logs',
         'align' => 'right',
-        'can' => 'admin',
+        'can' => 'admins',
+    ],
+    [
+        'text' => '<i class="fas fa-users"></i>',
+        'title' => 'Users',
+        'target' => '_blank',
+        'url' => config('app.url') . '/users',
+        'align' => 'right',
+        'can' => 'admins',
     ],
 ];
 

@@ -16,9 +16,5 @@ Route::resource('/cdd', CddController::class);
 Route::post('/termos/addcdd/{termo}', [TermoController::class,'addCdd']);
 Route::delete('/termos/removecdd/{termo}/{cdd}', [TermoController::class,'removeCdd']);
 
-Route::get('login', [LoginController::class, 'redirectToProvider']);
-Route::get('callback', [LoginController::class, 'handleProviderCallback']);
-Route::post('logout', [LoginController::class, 'logout']);
-
 # Logs  
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('can:admin');
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('can:admins');
