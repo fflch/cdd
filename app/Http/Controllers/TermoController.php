@@ -101,7 +101,30 @@ class TermoController extends Controller
         $validated = $request->validated();
         $termo = Termo::create($validated);
 
-        dd($request->remissivas());
+        $remissivas = array_filter($request->remissivas);
+        foreach($remissivas as $remissiva){
+            $remissiva = trim($remissiva);
+            $remissiva_db = Remissiva::where('titulo',$remissiva)->where('termo_id',$termo->id)->first();
+            if(!$remissiva_db) {
+                $remissiva_db = new Remissiva;
+                $remissiva_db->titulo = $remissiva;
+                $remissiva_db->termo_id = $termo->id;
+                $remissiva_db->save();
+            } 
+        }
+
+        $cdds = array_filter($request->cdds);
+        foreach($cdds as $cdd){
+            $cdd = trim($cdd);
+            $cdd_db = Cdd::where('cdd',$cdd)->first();
+            if(!$cdd_db) {
+                $cdd_db = new Cdd;
+                $cdd_db->cdd = $cdd;
+                $cdd_db->save();
+            } 
+            $termo->cdds()->attach($cdd_db);
+        }
+
 
         request()->session()->flash('alert-info','Registro cadastrado com sucesso');
         return redirect("/termos/{$termo->id}");
