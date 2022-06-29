@@ -8,6 +8,7 @@ use App\Models\Remissiva;
 use Illuminate\Http\Request;
 use App\Http\Requests\TermoRequest;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class TermoController extends Controller
 {
@@ -171,18 +172,22 @@ class TermoController extends Controller
         $termo->update($validated);
 
         $remissivas = array_filter($request->remissivas);
+
+        Remissiva::where('termo_id',$termo->id)->delete();
+
         foreach($remissivas as $remissiva){
             $remissiva = trim($remissiva);
-            $remissiva_db = Remissiva::where('titulo',$remissiva)->where('termo_id',$termo->id)->first();
-            if(!$remissiva_db) {
                 $remissiva_db = new Remissiva;
                 $remissiva_db->titulo = $remissiva;
                 $remissiva_db->termo_id = $termo->id;
                 $remissiva_db->save();
-            } 
         }
 
         $cdds = array_filter($request->cdds);
+
+        // deletamos os cdds
+        DB::table('cdd_termo')->where('termo_id',$termo->id)->delete();
+
         foreach($cdds as $cdd){
             $cdd = trim($cdd);
             $cdd_db = Cdd::where('cdd',$cdd)->first();
