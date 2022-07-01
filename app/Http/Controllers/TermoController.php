@@ -24,7 +24,7 @@ class TermoController extends Controller
          * Model: Termo      campos: assunto
          * Model: Remissiva  campos: titulo
          * Model: Cdd        campos: cdd
-         * 
+         *
          * Outros filtros exclusivos no model Termo:
          * - enviado_para_sibi
          * - normalizado
@@ -42,11 +42,11 @@ class TermoController extends Controller
                 ->orWhereHas('remissivas', function (Builder $query) use ($request){
                     $query->where('titulo','LIKE',"%{$request->search}%");
                 })
-                
+
                 # Model: Cdd        campos: cdd
                 ->orWhereHas('cdds', function (Builder $query) use ($request){
                     $query->where('cdd','LIKE',"%{$request->search}%");
-                }); 
+                });
             });
         }
 
@@ -74,7 +74,7 @@ class TermoController extends Controller
         return view('termo.index',[
             'termos' => $termos,
         ]);
-    } 
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -96,7 +96,7 @@ class TermoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(TermoRequest $request)
-    {   
+    {
         $this->authorize('admins');
         $validated = $request->validated();
         $termo = Termo::create($validated);
@@ -110,7 +110,7 @@ class TermoController extends Controller
                 $remissiva_db->titulo = $remissiva;
                 $remissiva_db->termo_id = $termo->id;
                 $remissiva_db->save();
-            } 
+            }
         }
 
         $cdds = array_filter($request->cdds);
@@ -121,7 +121,7 @@ class TermoController extends Controller
                 $cdd_db = new Cdd;
                 $cdd_db->cdd = $cdd;
                 $cdd_db->save();
-            } 
+            }
             $termo->cdds()->attach($cdd_db);
         }
 
@@ -140,7 +140,7 @@ class TermoController extends Controller
     {
         return view('termo.show',[
             'termo' => $termo,
-        ]);  
+        ]);
     }
 
     /**
@@ -167,32 +167,29 @@ class TermoController extends Controller
     public function update(TermoRequest $request, Termo $termo)
     {
         $this->authorize('admins');
-        $validated = $request->validated();
-        $termo->update($validated);
+        $termo->update($request->validated());
 
         $remissivas = array_filter($request->remissivas);
+
+        Remissiva::where('termo_id',$termo->id)->delete();
+
         foreach($remissivas as $remissiva){
-            $remissiva = trim($remissiva);
-            $remissiva_db = Remissiva::where('titulo',$remissiva)->where('termo_id',$termo->id)->first();
-            if(!$remissiva_db) {
-                $remissiva_db = new Remissiva;
-                $remissiva_db->titulo = $remissiva;
-                $remissiva_db->termo_id = $termo->id;
-                $remissiva_db->save();
-            } 
+            $remissiva_db = new Remissiva;
+            $remissiva_db->titulo = trim($remissiva);
+            $remissiva_db->termo_id = $termo->id;
+            $remissiva_db->save();
         }
 
         $cdds = array_filter($request->cdds);
+
+        $cdd_ids = array();
         foreach($cdds as $cdd){
-            $cdd = trim($cdd);
-            $cdd_db = Cdd::where('cdd',$cdd)->first();
-            if(!$cdd_db) {
-                $cdd_db = new Cdd;
-                $cdd_db->cdd = $cdd;
-                $cdd_db->save();
-            } 
-            $termo->cdds()->attach($cdd_db);
+            $cdd_db = Cdd::firstOrCreate(
+                ['cdd' => trim($cdd)],
+            );
+            $cdd_ids[] = $cdd_db->id;
         }
+        $termo->cdds()->sync($cdd_ids);
 
         request()->session()->flash('alert-info','Registro atualizado com sucesso');
         return redirect("/termos/{$termo->id}");
@@ -221,11 +218,11 @@ class TermoController extends Controller
     }
 
     public function removeCdd(Request $request, Termo $termo, Cdd $cdd)
-    {    
+    {
         $this->authorize('admins');
         $termo->cdds()->detach($cdd->id);
         request()->session()->flash('alert-danger', "{$cdd->cdd} foi excluído(a) de {$termo->assunto}");
         return redirect("/termos/{$termo->id}");
     }
-    
+
 }
