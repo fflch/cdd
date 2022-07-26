@@ -5,5 +5,6 @@
     <th>Categoria</th>
     <th>Enviado para SIBI</th> 
     <th>Normalizado</th>
-    <th>Observação</th>    
+    <th>Observação</th>  
+    <th>Deletar</th>    
 </tr> 
