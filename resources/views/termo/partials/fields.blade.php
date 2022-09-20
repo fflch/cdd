@@ -8,33 +8,22 @@
     </td>
     <td>
         <ul class="list-group">
-            @include('termo.partials.remissiva-show')
+            @include('termo.partials.cdd-show')
         </ul>
     </td>
     <td>
         <ul class="list-group">
-            @include('termo.partials.cdd-show')
+            @include('termo.partials.remissiva-show')
         </ul>
     </td>
     <td>{{  $termo->categoria ?? ''  }}</td>
-    <td>@if ($termo->enviado_para_sibi == 1)
-            Sim
-        @else
-            Não
-        @endif</td>
-    <td>@if ($termo->normalizado == 1)
-            Sim
-        @else
-            Não
-        @endif</td>
     <td>{{  $termo->observacao ?? ''  }}</td>
     <td>
     @can('admins')
         <form action="/termos/{{  $termo->id  }}" method="POST">
             @csrf
             @method('delete')
-            <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?');" style="background-color: transparent;border: none;"><svg class="svg-inline--fa fa-trash-alt fa-w-14" color="#007bff" aria-hidden="true" focusable="false" data-prefix="far" data-icon="trash-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path></svg>
-            </button>
+            <button type="submit" class="delete-item btn" onclick="return confirm('Tem certeza que deseja excluir?');"><i class="fas fa-trash-alt"></i></button>
         </form>
       @endcan
     </td>

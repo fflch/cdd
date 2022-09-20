@@ -34,6 +34,7 @@ class TermoController extends Controller
 
         $termos = new Termo;
 
+        //alterar aqui a pesquisa
         if($request->search) {
             $termos = $termos->where(function( $query ) use ( $request ){
                 # Model: Termo      campos: assunto
@@ -70,7 +71,7 @@ class TermoController extends Controller
             $termos = $termos->where('categoria','LIKE',"%{$request->categoria}%");
         }
 
-        $termos = $termos->orderBy('assunto', 'asc')->paginate(10);
+        $termos = $termos->orderBy('assunto', 'asc')->paginate(20);
 
         return view('termo.index',[
             'termos' => $termos,
@@ -101,6 +102,7 @@ class TermoController extends Controller
         $this->authorize('admins');
         $validated = $request->validated();
         $termo = Termo::create($validated);
+        $termo->update($validated);
 
         $remissivas = array_filter($request->remissivas);
         foreach($remissivas as $remissiva){
@@ -154,7 +156,8 @@ class TermoController extends Controller
     {
         $this->authorize('admins');
         return view('termo.edit',[
-            'termo' => $termo
+            'termo' => $termo,
+            //dd($termo)
         ]);
     }
 
@@ -181,6 +184,8 @@ class TermoController extends Controller
                 $remissiva_db->titulo = $remissiva;
                 $remissiva_db->termo_id = $termo->id;
                 $remissiva_db->save();
+                $termo->assunto = $termo->assunto;
+                $termo->save();
         }
 
         $cdds = array_filter($request->cdds);
@@ -199,8 +204,8 @@ class TermoController extends Controller
             $termo->cdds()->attach($cdd_db);
         }
 
-        request()->session()->flash('alert-info','Registro atualizado com sucesso');
-        return redirect("/termos/{$termo->id}");
+        //request()->session()->flash('alert-info','Registro atualizado com sucesso');
+        return redirect()->back();
     }
 
     /**
