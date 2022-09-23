@@ -3,7 +3,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-sm input-group" id="query-select-group">
-                <span><b>Categoria</b></span>
+                <span><b>Categoria</b></span><br>
                 <select class="form-select" name="categoria">
                     <option selected value="">--Selecione--</option>
                     <option value="Assunto" @if( request()->categoria == "Assunto") selected @endif>Assunto</option>
@@ -12,7 +12,7 @@
                 </select>
             </div>
             <div class="col-sm input-group" id="query-select-group">
-                <span><b>Enviado para Sibi</b></span>
+                <span><b>Enviado para Sibi</b></span><br>
                 <select class="form-select" name="enviado_para_sibi">
                     <option selected value="">--Selecione--</option>
                     <option value="1" @if( request()->enviado_para_sibi == "1") selected @endif>Sim</option>
@@ -20,7 +20,7 @@
                 </select>
             </div>
             <div class="col-sm input-group" id="query-select-group">
-                <span><b>Normalizado</b></span>
+                <span><b>Normalizado</b></span><br>
                 <select class="form-select" name="normalizado">
                     <option selected value="">--Selecione--</option>
                     <option value="1"  @if( request()->normalizado == "1") selected @endif>Sim</option>
@@ -29,14 +29,28 @@
             </div>
 
         </div>
+        <br>
         <div class="row">
-            <div class="col-sm input-group">
-                <input type="text" class="form-control" name="search" type="text" placeholder="Digite o assunto, a remissiva ou o cdd..." value="{{ request()->search }}" >
-                <span class="input-group-btn">
-                        <button type="submit" class="btn btn-success">Buscar</button>
-                </span>
-            </div>
+                <div class="col-sm input-group">
+                        <input type="text" class="form-control" name="search[]" type="text">
+                        <span class="input-group-btn">
+                        </span>
+                        <select name="campos[0]" class="btn btn-success mr-2">
+                        <option value="" selected="">Selecione um campo</option>
 
-        </div>
-    </div>
+                        @foreach($campos as $valor=>$chave)
+                            @if(Request()->campos != null && array_key_exists(0, Request()->campos))
+                            <option value = "{{$valor}}" @if(Request()->campos[0] == $valor) selected @endif>
+                            @else
+                            <option value = "{{$valor}}">
+                            @endif
+                            {{$chave}}
+                            </option>
+                        @endforeach
+                        </select>
+                    <br>
+                </div>
+        </div><br>
+        <button type="submit" class="btn btn-success">Buscar</button>
+    
 </div>

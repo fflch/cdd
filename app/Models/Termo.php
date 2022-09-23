@@ -12,6 +12,12 @@ class Termo extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     protected $guarded = ['id'];
 
+    const campos = [
+        'assunto'       => 'Assunto',
+        'remissiva'     => 'Remissiva',
+        'cdd'           => 'CDD'
+    ];
+
     public static function categorias(){
         return [
             'Assunto',

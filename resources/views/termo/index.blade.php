@@ -8,13 +8,13 @@
     <table class="table table-bordered">
         <tbody>
             @include('termo.partials.table-row-headers')
-            @forelse($termos as $termo)
+            @forelse($query as $termo)
                 @include('termo.partials.fields')
             @empty
                 <p>Não há registros cadastrados.</p>
             @endforelse
         </tbody>
     </table>
-    {{ $termos->appends(request()->query())->links() }}
+    {{$query->appends(request()->query())->links()}}
 </div>
 @endsection

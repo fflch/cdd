@@ -12,71 +12,63 @@ use Illuminate\Support\Facades\DB;
 
 class TermoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $campos = Termo::campos;
+    
 
-    public function index(Request $request)
-    {
-        /*
-         * Campo da caixa de busca:
-         * Model: Termo      campos: assunto
-         * Model: Remissiva  campos: titulo
-         * Model: Cdd        campos: cdd
-         * 
-         * Outros filtros exclusivos no model Termo:
-         * - enviado_para_sibi
-         * - normalizado
-         * - categoria
-         */
-
-        $termos = new Termo;
+    public function search(){
+        $request = request();
+        $termos = Termo::orderBy('assunto', 'asc');
 
         //alterar aqui a pesquisa
-        if($request->search) {
-            $termos = $termos->where(function( $query ) use ( $request ){
-                # Model: Termo      campos: assunto
-                $query->where('assunto', 'LIKE',"%{$request->search}%")
-
-                # Model: Remissiva  campos: titulo
-                ->orWhereHas('remissivas', function (Builder $query) use ($request){
-                    $query->where('titulo','LIKE',"%{$request->search}%");
-                })
-                
-                # Model: Cdd        campos: cdd
-                ->orWhereHas('cdds', function (Builder $query) use ($request){
-                    $query->where('cdd','LIKE',"%{$request->search}%");
-                }); 
-            });
+        if($request->has('campos')) {
+            $campos = Termo::campos;
+            unset($campos['todos_campos']);
+            foreach($request->campos as $key => $value) {
+                $termos->when(!is_null($value) && !is_null($request->search[$key]),
+                    function($query) use ($request, $campos, $key, $value) {
+                        if($value == 'assunto'){
+                            $query->where($value,'LIKE', '%'.$request->search[$key].'%');
+                        }
+                        elseif($value == 'cdd') {
+                            $query->WhereHas('cdds', function (Builder $query) use ($request){
+                                $query->where('cdd','LIKE', '%'.$request->search[0].'%');
+                            });
+                        }
+                        elseif($value == 'remissiva') {
+                            $query->WhereHas('remissivas', function (Builder $query) use ($request){
+                                $query->where('titulo','LIKE', '%'.$request->search[0].'%');
+                            });
+                        }
+                    }
+                );
+            }
         }
 
-        # Flag Enviado para Sibi
-        if ($request->enviado_para_sibi == "1"){
-            $termos = $termos->where('enviado_para_sibi',1);
-        } elseif ($request->enviado_para_sibi == "0") {
-            $termos = $termos->where('enviado_para_sibi',0);
-        }
+        $termos->when($request->enviado_para_sibi, function($query) use ($request){
+            $query->where('enviado_para_sibi', '=', $request->enviado_para_sibi);
+        });
 
-        # Flag Normalizado
-        if ($request->normalizado == "1"){
-            $termos = $termos->where('normalizado',1);
-        } elseif ($request->normalizado == "0") {
-            $termos = $termos->where('normalizado',0);
-        }
+        $termos->when($request->normalizado, function($query) use ($request){
+            $query->where('normalizado', '=', $request->normalizado);
+        });
 
-        # Flag categoria
-        if ($request->categoria){
-            $termos = $termos->where('categoria','LIKE',"%{$request->categoria}%");
-        }
+        $termos->when($request->categoria, function($query) use ($request){
+            $query->where('categoria', '=', $request->categoria);
+        });
 
-        $termos = $termos->orderBy('assunto', 'asc')->paginate(20);
+        return $termos;
+    }
+    
+    public function index(Request $request){
+        $termos = $this->search();
+        $query = $termos->paginate(20);
 
         return view('termo.index',[
-            'termos' => $termos,
+            'termos'        => $termos,
+            'campos'        => $this->campos,
+            'query'         => $query
         ]);
-    } 
+    }
 
     /**
      * Show the form for creating a new resource.
