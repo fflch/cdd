@@ -32,19 +32,19 @@
         <br>
         <div class="row">
                 <div class="col-sm input-group">
-                        <input type="text" class="form-control" name="search[]" type="text">
+                        <input type="text" class="form-control" name="search" type="text">
                         <span class="input-group-btn">
                         </span>
-                        <select name="campos[0]" class="btn btn-success mr-2">
+                        <select name="campos" class="btn btn-success mr-2">
                         <option value="" selected="">Selecione um campo</option>
 
-                        @foreach($campos as $valor=>$chave)
-                            @if(Request()->campos != null && array_key_exists(0, Request()->campos))
-                            <option value = "{{$valor}}" @if(Request()->campos[0] == $valor) selected @endif>
+                        @foreach($campos as $chave=>$valor)
+                            @if(Request()->campos != null)
+                            <option value = "{{$chave}}" {{ (Request()->campos
+                            == $chave) ? 'selected' : '' }}>{{ $valor }}
                             @else
-                            <option value = "{{$valor}}">
+                            <option value = "{{$chave}}">{{ $valor }}
                             @endif
-                            {{$chave}}
                             </option>
                         @endforeach
                         </select>
@@ -52,5 +52,5 @@
                 </div>
         </div><br>
         <button type="submit" class="btn btn-success">Buscar</button>
-    
+
 </div>
