@@ -86,7 +86,9 @@
             @include('termo.partials.cdd-form')
           </div>
         </div>
+        <bl><b>Data de Criação: </b>{{  old('created_at', $termo->created_at) }}<br>
+        <bl><b>Ultima alteração: </b>{{  old('updated_at', $termo->updated_at) }}<br>
 
-        <button type="submit" class="btn btn-outline-success">Enviar</button>
+        <button type="submit" class="btn btn-outline-success" onclick="{{$termo->updated_at}}">Enviar</button>
     </div>
 </div>

@@ -28,8 +28,8 @@ class TermoRequest extends FormRequest
             'observacao' => 'nullable',
             'classificacao' => 'nullable',
             'categoria' => 'nullable',
-            'enviado_para_sibi' => 'required',
-            'normalizado' => 'required',
+            'enviado_para_sibi' => 'nullable',
+            'normalizado' => 'nullable',
             'cdds' => 'nullable',
             'remissivas' => 'nullable',
         ];
@@ -40,8 +40,6 @@ class TermoRequest extends FormRequest
     {
     return [
         'assunto.required' => 'O assunto não pode ficar em branco.',
-        'enviado_para_sibi.required' => 'Selecione uma opção para "Enviado para SIBI".',
-        'normalizado.required' => 'Selecione uma opção para "Normalizado".',
     ];
     }
 }

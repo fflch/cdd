@@ -11,68 +11,49 @@ use Illuminate\Database\Eloquent\Builder;
 
 class TermoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $campos = Termo::campos;
 
-    public function index(Request $request)
-    {
-        /*
-         * Campo da caixa de busca:
-         * Model: Termo      campos: assunto
-         * Model: Remissiva  campos: titulo
-         * Model: Cdd        campos: cdd
-         *
-         * Outros filtros exclusivos no model Termo:
-         * - enviado_para_sibi
-         * - normalizado
-         * - categoria
-         */
+    public function search(){
+        $request = request();
+        $termos = Termo::with('remissivas','cdds')->orderBy('assunto', 'asc');
 
-        $termos = new Termo;
+        $termos->when($request->campos == 'assunto', function($query) use ($request) {
+            $query->where('assunto','LIKE', '%'. $request->search .'%');
+        });
 
-        if($request->search) {
-            $termos = $termos->where(function( $query ) use ( $request ){
-                # Model: Termo      campos: assunto
-                $query->where('assunto', 'LIKE',"%{$request->search}%")
-
-                # Model: Remissiva  campos: titulo
-                ->orWhereHas('remissivas', function (Builder $query) use ($request){
-                    $query->where('titulo','LIKE',"%{$request->search}%");
-                })
-
-                # Model: Cdd        campos: cdd
-                ->orWhereHas('cdds', function (Builder $query) use ($request){
-                    $query->where('cdd','LIKE',"%{$request->search}%");
-                });
+        $termos->when($request->campos == 'cdd', function($query) use ($request) {
+            $query->WhereHas('cdds', function (Builder $query) use ($request){
+                $query->where('cdd','LIKE', '%'.$request->search.'%');
             });
-        }
+        });
 
-        # Flag Enviado para Sibi
-        if ($request->enviado_para_sibi == "1"){
-            $termos = $termos->where('enviado_para_sibi',1);
-        } elseif ($request->enviado_para_sibi == "0") {
-            $termos = $termos->where('enviado_para_sibi',0);
-        }
+        $termos->when($request->campos == 'remissiva', function($query) use ($request) {
+            $query->WhereHas('remissivas', function (Builder $query) use ($request){
+                $query->where('titulo','LIKE', '%'.$request->search.'%');
+            });
+        });
 
-        # Flag Normalizado
-        if ($request->normalizado == "1"){
-            $termos = $termos->where('normalizado',1);
-        } elseif ($request->normalizado == "0") {
-            $termos = $termos->where('normalizado',0);
-        }
+        $termos->when($request->enviado_para_sibi, function($query) use ($request){
+            $query->where('enviado_para_sibi', '=', $request->enviado_para_sibi);
+        });
 
-        # Flag categoria
-        if ($request->categoria){
-            $termos = $termos->where('categoria','LIKE',"%{$request->categoria}%");
-        }
+        $termos->when($request->normalizado, function($query) use ($request){
+            $query->where('normalizado', '=', $request->normalizado);
+        });
 
-        $termos = $termos->orderBy('assunto', 'asc')->paginate(10);
+        $termos->when($request->categoria, function($query) use ($request){
+            $query->where('categoria', '=', $request->categoria);
+        });
+
+        return $termos->paginate(20);
+    }
+
+    public function index(Request $request){
+        $termos = $this->search();
 
         return view('termo.index',[
-            'termos' => $termos,
+            'campos' => $this->campos,
+            'termos'  => $termos,
         ]);
     }
 
@@ -153,7 +134,7 @@ class TermoController extends Controller
     {
         $this->authorize('admins');
         return view('termo.edit',[
-            'termo' => $termo
+            'termo' => $termo,
         ]);
     }
 
@@ -174,10 +155,13 @@ class TermoController extends Controller
         Remissiva::where('termo_id',$termo->id)->delete();
 
         foreach($remissivas as $remissiva){
-            $remissiva_db = new Remissiva;
-            $remissiva_db->titulo = trim($remissiva);
-            $remissiva_db->termo_id = $termo->id;
-            $remissiva_db->save();
+            $remissiva = trim($remissiva);
+                $remissiva_db = new Remissiva;
+                $remissiva_db->titulo = $remissiva;
+                $remissiva_db->termo_id = $termo->id;
+                $remissiva_db->save();
+                $termo->assunto = $termo->assunto;
+                $termo->save();
         }
 
         $cdds = array_filter($request->cdds);
@@ -191,8 +175,7 @@ class TermoController extends Controller
         }
         $termo->cdds()->sync($cdd_ids);
 
-        request()->session()->flash('alert-info','Registro atualizado com sucesso');
-        return redirect("/termos/{$termo->id}");
+        return redirect()->back();
     }
 
     /**
