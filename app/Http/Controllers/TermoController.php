@@ -120,7 +120,7 @@ class TermoController extends Controller
     public function show(Termo $termo)
     {
         return view('termo.show',[
-            'termo' => $termo,
+            'termo' =>  $termo,
         ]);
     }
 
