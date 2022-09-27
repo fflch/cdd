@@ -133,7 +133,8 @@ class TermoController extends Controller
     public function show(Termo $termo)
     {
         return view('termo.show',[
-            'termo' => $termo,
+            'termo' =>  $termo,
+            'cdds'  =>  $cdds
         ]);
     }
 
@@ -148,7 +149,6 @@ class TermoController extends Controller
         $this->authorize('admins');
         return view('termo.edit',[
             'termo' => $termo,
-            //dd($termo)
         ]);
     }
 
@@ -189,7 +189,6 @@ class TermoController extends Controller
         }
         $termo->cdds()->sync($cdd_ids);
 
-        //request()->session()->flash('alert-info','Registro atualizado com sucesso');
         return redirect()->back();
     }
 
