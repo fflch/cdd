@@ -5,6 +5,7 @@ use App\Models\Remissiva;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Utils\Mapeamento;
 
 class Termo extends Model implements Auditable
 {
@@ -34,5 +35,9 @@ class Termo extends Model implements Auditable
     public function cdds()
     {
         return $this->belongsToMany('App\Models\Cdd', 'cdd_termo')->withTimestamps();
+    }
+
+    public function mapeamento($chave) {
+        return Mapeamento::map($chave);
     }
 }
