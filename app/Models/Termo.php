@@ -15,7 +15,6 @@ class Termo extends Model implements Auditable
 
     const campos = [
         'assunto'       => 'Assunto',
-        'remissiva'     => 'Remissiva',
         'cdd'           => 'CDD'
     ];
 
@@ -29,12 +28,12 @@ class Termo extends Model implements Auditable
 
     public function remissivas()
     {
-        return $this->hasMany(Remissiva::class);
+        return $this->hasMany(Remissiva::class)->orderby('titulo', 'asc');
     }
 
     public function cdds()
     {
-        return $this->belongsToMany('App\Models\Cdd', 'cdd_termo')->withTimestamps();
+        return $this->belongsToMany('App\Models\Cdd', 'cdd_termo')->withTimestamps()->orderby('cdd', 'asc');
     }
 
     public function mapeamento($chave) {
