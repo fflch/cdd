@@ -18,7 +18,7 @@ class TermoController extends Controller
         $termos = Termo::with('remissivas','cdds')->orderBy('assunto', 'asc');
 
         $termos->when($request->campos == 'assunto', function($query) use ($request) {
-            $query->where('assunto','LIKE', '%'. $request->search .'%')->str_replace('(','', $request->search);
+            $query->where('assunto','LIKE', '%'. $request->search .'%');
         });
 
         $termos->when($request->campos == 'cdd', function($query) use ($request) {
