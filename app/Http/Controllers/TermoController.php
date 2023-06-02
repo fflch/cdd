@@ -45,7 +45,7 @@ class TermoController extends Controller
             $query->where('categoria', '=', $request->categoria);
         });
 
-        return $termos->paginate(20);
+        return $termos->orderBy('assunto', 'desc')->paginate(20);
     }
 
     public function index(Request $request){

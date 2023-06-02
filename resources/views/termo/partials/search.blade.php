@@ -3,8 +3,8 @@
     <div class="card-body">
         <div class="row">
             <div class="col-sm input-group" id="query-select-group">
-                <span><b>Categoria</b></span><br>
-                <select class="form-select" name="categoria">
+                <span class="input-group-btn"><b>Categoria</b></span><br>
+                <select name="categoria" class="btn btn-success mr-2">
                     <option selected value="">--Selecione--</option>
                     <option value="Assunto" @if( request()->categoria == "Assunto") selected @endif>Assunto</option>
                     <option value="Coleção" @if( request()->categoria == "Coleção") selected @endif>Coleção</option>
@@ -13,7 +13,7 @@
             </div>
             <div class="col-sm input-group" id="query-select-group">
                 <span><b>Enviado para Sibi</b></span><br>
-                <select class="form-select" name="enviado_para_sibi">
+                <select name="enviado_para_sibi" class="btn btn-success mr-2">
                     <option selected value="">--Selecione--</option>
                     <option value="1" @if( request()->enviado_para_sibi == "1") selected @endif>Sim</option>
                     <option value="0" @if( request()->enviado_para_sibi == "0") selected @endif>Não</option>
@@ -21,7 +21,7 @@
             </div>
             <div class="col-sm input-group" id="query-select-group">
                 <span><b>Normalizado</b></span><br>
-                <select class="form-select" name="normalizado">
+                <select name="normalizado" class="btn btn-success mr-2">
                     <option selected value="">--Selecione--</option>
                     <option value="1"  @if( request()->normalizado == "1") selected @endif>Sim</option>
                     <option value="0"  @if( request()->normalizado == "0") selected @endif>Não</option>
