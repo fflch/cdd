@@ -1,29 +1,21 @@
 <?php
 
-$cdd = [
+$pesquisa = [
     [
-        'text' => '<i class="fas fa-list"></i> Listar',
-        'url' => config('app.url') . '/cdd',
+        'text' => '<i class="fas fa-plus-square"></i> Termos por categoria',
+        'url' => '/',
+        'can' => 'admin',
     ],
     [
-        'text' => '<i class="fas fa-plus"></i>  Cadastrar CDD',
-        'url' => config('app.url') . '/cdd/create',
-        'can' => 'admins',
-    ],
-];
-
-$menu = [
-    [
-        'text' => '<i class="fas fa-plus-square"></i> Cadastrar novo registro',
+        'text' => '<i class="fas fa-plus-square"></i> Termos por booleana',
         'url' => config('app.url') . '/termos/create',
         'can' => 'admin',
     ],
-    /*[
-        'text' => 'Índice CDD',
-        'submenu' => $cdd,
+    [
+        'text' => '<i class="fas fa-plus-square"></i> CDD',
+        'url' => config('app.url') . '/termos/create',
         'can' => 'admin',
-
-    ],*/
+    ],
 ];
 
 $right_menu = [
@@ -45,19 +37,6 @@ $right_menu = [
     ],
 ];
 
-/* $right_menu = [
-    [
-        'text' => '<i class="fas fa-cog"></i>',
-        'title' => 'Configurações',
-        'target' => '_blank',
-        'url' => config('app.url') . '/',
-        'align' => 'right',
-    ],
-]; */
-
-# dashboard_url renomeado para app_url
-# USPTHEME_SKIN deve ser colocado no .env da aplicação 
-
 return [
     'title' => config('app.name'),
     'skin' => env('USP_THEME_SKIN', 'uspdev'),
@@ -65,6 +44,18 @@ return [
     'logout_method' => 'POST',
     'logout_url' => config('app.url') . '/logout',
     'login_url' => config('app.url') . '/login',
-    'menu' => $menu,
+    'menu' => [
+        [
+            'text' => '<i class="fas fa-plus-square"></i> Cadastrar novo registro',
+            'url' => config('app.url') . '/termos/create',
+            'can' => 'admin',
+        ],
+        [
+            'text' => '<i class="fas fa-plus-square"></i>  Pesquisa',
+            'submenu' => $pesquisa,
+            'can' => 'admin',
+        ],
+
+    ],
     'right_menu' => $right_menu,
 ];
