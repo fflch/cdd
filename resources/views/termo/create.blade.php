@@ -1,7 +1,170 @@
 @extends('main')
 @section('content')
-    <form method="POST" action="/termos">
-        @csrf
-        @include('termo.partials.form',['param' => 'Cadastrar novo'])
-    </form>
+  <form method="POST" action="/termos">
+    @csrf
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm form-group">
+              <b>Termo</b> <br>
+              <input class="form-control" type="text" name="assunto" value="{{  old('assunto', $termo->assunto) }}" >
+          </div>
+        </div>
+
+        <div class="row">
+          <div id="container_cdd" class="col-sm form-group">
+            @foreach(request()->cdds ?? [''] as $cdd)
+              <b>CDDs</b> <button class="btn btn-primary ml-2">+</button><br>
+              <div id="cdd{{ $loop->index }}">
+                <input name="cdds[]" value=""><button class="btn btn-danger ml-2">-</button><br>
+              </div>
+            @endforeach
+              <div id="cdd{{ count(request()->cdds ?? ['']) }}"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div id="container_remissiva" class="col-sm form-group">
+            @foreach(request()->remissivas ?? [''] as $remissiva)
+              <b>Remissivas</b> <button class="btn btn-primary ml-2">+</button><br>
+              <div id="remissiva{{ $loop->index }}">
+                <input name="remissivas[]" value=""><button class="btn btn-danger ml-2">-</button><br>
+              </div>
+            @endforeach
+              <div id="remissiva{{ count(request()->remissivas ?? ['']) }}"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm form-group">
+            <b>Categoria</b><br>
+            <select class="form-control" name="categoria">
+              <option value="" selected="">Selecione uma opção </option>
+              @foreach($termo::categorias() as $categoria)
+                  @if (old('categoria') == '')
+                  <option value="{{ $categoria }}" {{ ($termo->categoria == $categoria) ? 'selected':'' }}>
+                      {{ $categoria }}
+                  </option>
+                  @else
+                  <option value="{{ $categoria }}" {{ (old('categoria') == $categoria) ? 'selected' : '' }}>
+                      {{ $categoria }}
+                  </option>
+                  @endif
+              @endforeach
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm form-group">
+            <b>Observação</b>
+            <br>
+            <input type="text" class="form-control" name="observacao" value="{{  old('observacao', $termo->observacao) }}"></textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm form-group">
+            <b>Enviado para SIBI</b>
+            <br>
+            <input type="radio" name="enviado_para_sibi" value="1"
+            @if (isset($termo->enviado_para_sibi) and ($termo->enviado_para_sibi === 1))
+                            checked
+                        @elseif ((old('enviado_para_sibi') != null) and (old('fixarip') == 1))
+                            checked
+            @endif> Sim
+            <input type="radio" name="enviado_para_sibi" value="0"
+            @if (isset($termo->enviado_para_sibi) and ($termo->enviado_para_sibi === 0))
+                    checked
+                @elseif ((old('enviado_para_sibi') != null) and (old('fixarip') == 0))
+                    checked
+                @endif> Não
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm form-group">
+            <b>Normalizado</b>
+            <br>
+            <input type="radio" name="normalizado" value="1"
+              @if (isset($termo->normalizado) and ($termo->normalizado === 1))
+                checked
+              @elseif ((old('normalizado') != null) and (old('fixarip') == 1))
+                        checked
+              @endif> Sim
+            <input type="radio" name="normalizado" value="0"
+              @if (isset($termo->normalizado) and ($termo->normalizado === 0))
+                checked
+              @elseif ((old('normalizado') != null) and (old('fixarip') == 0))
+                checked
+              @endif> Não
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success" onclick="{{$termo->updated_at}}">Salvar</button>
+      </div>
+    </div>
+
+  </form>
 @endsection
+
+@section('javascripts_bottom')
+<script>
+  $(document).ready( function () {
+    let row_cdd = $("input[name^='cdds']").length;
+    let row_remissiva = $("input[name^='remissivas']").length;
+
+    $("#container_cdd").on("click", ".btn-primary", function(e){
+      e.preventDefault();
+      if(row_cdd < 4) {
+        let new_row_cdd = row_cdd - 1;
+        $("#cdd" + row_cdd).html( $("#cdd" + new_row_cdd).html() );
+        $("#container_cdd").append('<div id="cdd' + (row_cdd + 1)+ '"></div>');
+        row_cdd++;
+      }
+    });
+
+    $("#container_cdd").on("click", ".btn-danger", function(e){
+      e.preventDefault();
+      if(row_cdd > 1){
+        $(this).closest("div").remove();
+        row_cdd--;
+        $("div[id^='cdd']").each(function(index, value) {
+          $(this).attr("id","cdd" + index);
+        });
+      }
+    });
+
+    $("#container_remissiva").on("click", ".btn-primary", function(e){
+      e.preventDefault();
+      if(row_remissiva < 4) {
+        let new_row_remissiva = row_remissiva - 1;
+        $("#remissiva" + row_remissiva).html( $("#remissiva" + new_row_remissiva).html() );
+        $("#container_remissiva").append('<div id="remissiva' + (row_remissiva + 1)+ '"></div>');
+        row_remissiva++;
+      }
+    });
+
+    $("#container_remissiva").on("click", ".btn-danger", function(e){
+      e.preventDefault();
+      if(row_remissiva > 1){
+        $(this).closest("div").remove();
+        row_remissiva--;
+        $("div[id^='remissiva']").each(function(index, value) {
+          $(this).attr("id","remissiva" + index);
+        });
+      }
+    });
+
+
+    $("input[name^='search']").keypress(function (e) {
+      var key = e.which;
+      if(key == 13)  // the enter key code
+        {
+          $('#buscar').click();
+          return false;
+        }
+    });
+
+  });
+  </script>
+@stop

@@ -5,7 +5,6 @@
             <div class="col-sm input-group" id="query-select-group">
                 <span class="input-group-btn"><b>Categoria</b></span><br>
                 <select name="categoria" class="btn btn-success mr-2">
-                    <option selected value="">--Selecione--</option>
                     <option value="Assunto" @if( request()->categoria == "Assunto") selected @endif>Assunto</option>
                     <option value="Coleção" @if( request()->categoria == "Coleção") selected @endif>Coleção</option>
                     <option value="Autor" @if( request()->categoria == "Autor") selected @endif>Autor</option>
@@ -32,21 +31,22 @@
         <br>
         <div class="row">
                 <div class="col-sm input-group">
-                        <input type="text" class="form-control" name="search" type="text">
+                  <input type="text" class="form-control" name="search" type="text" value="{{ old('search') }}">
                         <span class="input-group-btn">
                         </span>
                         <select name="campos" class="btn btn-success mr-2">
                         <option value="" selected="">Selecione um campo</option>
-
-                        @foreach($campos as $chave=>$valor)
-                            @if(Request()->campos != null)
-                            <option value = "{{$chave}}" {{ (Request()->campos
-                            == $chave) ? 'selected' : '' }}>{{ $valor }}
-                            @else
-                            <option value = "{{$chave}}">{{ $valor }}
-                            @endif
-                            </option>
-                        @endforeach
+                        @isset($campos)
+                          @foreach($campos as $chave=>$valor)
+                              @if(Request()->campos != null)
+                              <option value = "{{$chave}}" {{ (Request()->campos
+                              == $chave) ? 'selected' : '' }}>{{ $valor }}
+                              @else
+                              <option value = "{{$chave}}">{{ $valor }}
+                              @endif
+                              </option>
+                          @endforeach
+                        @endisset
                         </select>
                     <br>
                 </div>

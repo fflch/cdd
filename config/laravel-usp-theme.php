@@ -8,12 +8,12 @@ $pesquisa = [
     ],
     [
         'text' => '<i class="fas fa-plus-square"></i> Termos por booleana',
-        'url' => config('app.url') . '/termos/create',
+        'url' => config('app.url') . '/termo/pesquisabooleana',
         'can' => 'admin',
     ],
     [
         'text' => '<i class="fas fa-plus-square"></i> CDD',
-        'url' => config('app.url') . '/termos/create',
+        'url' => config('app.url') . '/termo/pesquisacdd',
         'can' => 'admin',
     ],
 ];

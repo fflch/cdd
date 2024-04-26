@@ -3,7 +3,7 @@
   <form method="POST" action="/termos/{{ $termo->id }}">
     @csrf
     @method('patch')
-    @include('termo.partials.form',['param' => 'Editar'])
+    @include('termo.partials.form')
   </form>
   <div class = "card">
     <div class = "card-body">

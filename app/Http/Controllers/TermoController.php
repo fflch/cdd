@@ -8,52 +8,22 @@ use App\Models\Remissiva;
 use Illuminate\Http\Request;
 use App\Http\Requests\TermoRequest;
 use Illuminate\Database\Eloquent\Builder;
+use App\Services\TermoService;
+use App\Http\Requests\SearchCDDRequest;
 
 class TermoController extends Controller
 {
-    private $campos = Termo::campos;
 
-    public function search(){
-        $request = request();
-        $termos = Termo::with('remissivas','cdds')->orderBy('assunto', 'asc');
-
-        $termos->when($request->campos == 'assunto', function($query) use ($request) {
-            $query->where('assunto','LIKE', '%'. $request->search .'%');
-        });
-
-        $termos->when($request->campos == 'cdd', function($query) use ($request) {
-            $query->WhereHas('cdds', function (Builder $query) use ($request){
-                $query->where('cdd','LIKE', '%'.$request->search.'%');
-            });
-        });
-
-        $termos->when($request->campos == 'remissiva', function($query) use ($request) {
-            $query->WhereHas('remissivas', function (Builder $query) use ($request){
-                $query->where('titulo','LIKE', '%'.$request->search.'%');
-            });
-        });
-
-        $termos->when($request->enviado_para_sibi, function($query) use ($request){
-            $query->where('enviado_para_sibi', '=', $request->enviado_para_sibi);
-        });
-
-        $termos->when($request->normalizado, function($query) use ($request){
-            $query->where('normalizado', '=', $request->normalizado);
-        });
-
-        $termos->when($request->categoria, function($query) use ($request){
-            $query->where('categoria', '=', $request->categoria);
-        });
-
-        return $termos->orderBy('assunto', 'desc')->paginate(20);
+    public function search(Request $request){
+        return view('termo.index',[
+            'termos' => TermoService::search($request),
+            'search' => $request->search,
+        ]);
     }
 
-    public function index(Request $request){
-        $termos = $this->search();
-
+    public function index(){
         return view('termo.index',[
-            'campos' => $this->campos,
-            'termos'  => $termos,
+            'termos'  => Termo::with('remissivas','cdds')->orderBy('assunto', 'asc')->paginate(10),
         ]);
     }
 
@@ -79,13 +49,16 @@ class TermoController extends Controller
     public function store(TermoRequest $request)
     {
         $this->authorize('admins');
-        $validated = $request->validated();
-        $termo = Termo::create($validated);
+        $termo = Termo::create($request->validated());
 
-        $remissivas = array_filter($request->remissivas);
-        foreach($remissivas as $remissiva){
+        foreach(array_filter($request->cdds) as $cdd) {
+            $cdd = Cdd::firstOrCreate(['cdd' => trim($cdd)]);
+            $termo->cdds()->attach($cdd->id);
+        }
+
+        foreach(array_filter($request->remissivas) as $remissiva){
             $remissiva = trim($remissiva);
-            $remissiva_db = Remissiva::where('titulo',$remissiva)->where('termo_id',$termo->id)->first();
+            $remissiva_db = Remissiva::where('titulo', $remissiva)->where('termo_id', $termo->id)->first();
             if(!$remissiva_db) {
                 $remissiva_db = new Remissiva;
                 $remissiva_db->titulo = $remissiva;
@@ -93,19 +66,6 @@ class TermoController extends Controller
                 $remissiva_db->save();
             }
         }
-
-        $cdds = array_filter($request->cdds);
-        foreach($cdds as $cdd){
-            $cdd = trim($cdd);
-            $cdd_db = Cdd::where('cdd',$cdd)->first();
-            if(!$cdd_db) {
-                $cdd_db = new Cdd;
-                $cdd_db->cdd = $cdd;
-                $cdd_db->save();
-            }
-            $termo->cdds()->attach($cdd_db);
-        }
-
 
         request()->session()->flash('alert-info','Registro cadastrado com sucesso');
         return redirect("/termos/{$termo->id}");
@@ -206,6 +166,58 @@ class TermoController extends Controller
         $termo->cdds()->detach($cdd->id);
         request()->session()->flash('alert-danger', "{$cdd->cdd} foi excluído(a) de {$termo->assunto}");
         return redirect("/termos/{$termo->id}");
+    }
+
+    public function pesquisacdd(){
+        return view('termo.pesquisacdd',[
+            'termos'  => Termo::with('remissivas','cdds')->orderBy('assunto', 'asc')->paginate(10),
+        ]);
+    }
+
+    public function searchcdd(SearchCDDRequest $request){
+        $termos = Termo::with('remissivas','cdds')->wherehas('cdds', function($query) use ($request) {
+            $query->where('cdd', 'LIKE', $request->search . '%');
+        })->paginate(10);
+
+        return view('termo.pesquisacdd',[
+            'termos' => $termos,
+            'search' => $request->search,
+        ]);
+    }
+
+    public function pesquisabooleana(){
+        return view('termo.pesquisabooleana',[
+            'termos'  => Termo::with('remissivas','cdds')->orderBy('assunto', 'asc')->paginate(10),
+            'campos' => Termo::campos,
+        ]);
+    }
+
+    public function searchbooleana(Request $request) {
+        $termos = Termo::with('remissivas','cdds')->orderBy('assunto', 'asc');
+        foreach($request->campos as $key => $value) {
+            $termos->when(!is_null($value) && !is_null($request->search[$key]),
+                function($query) use ($request, $key, $value) {
+                    if($value == 'assunto' OR $value == 'observacao') {
+                        $query->where($value, 'LIKE', '%' . $request->search[$key] . '%');
+                    }
+                    if($value == 'titulo') {
+                        $query->wherehas('remissivas', function($query) use ($request, $key, $value) {
+                            $query->where($value, 'LIKE', '%' . $request->search[$key] . '%');
+                        });
+                    }
+                    if($value == 'cdd') {
+                        $query->wherehas('cdds', function($query) use ($request, $key, $value) {
+                            $query->where($value, 'LIKE', $request->search[$key] . '%');
+                        });
+                    }
+                }
+            );
+        }
+
+        return view('termo.pesquisabooleana',[
+            'termos'  => $termos->paginate(10),
+            'campos' => Termo::campos,
+        ]);
     }
 
 }

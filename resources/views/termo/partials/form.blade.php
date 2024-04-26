@@ -1,10 +1,4 @@
 <div class="card">
-    <div class="card-header">
-      <a href="/termos/{{ $termo->id }}">
-          <i class="fas fa-chevron-circle-left"></i>
-      </a>        </a>
-      <b>{{ $param ?? '' }}</b>
-    </div>
     <div class="card-body">
       <div class="row">
         <div class="col-sm form-group">
@@ -93,6 +87,6 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-outline-success" onclick="{{$termo->updated_at}}">Enviar</button>
+      <button type="submit" class="btn btn-success" onclick="{{$termo->updated_at}}">Salvar</button>
     </div>
 </div>

@@ -35,11 +35,11 @@ class TermoRequest extends FormRequest
         ];
         return $rules;
     }
-    
+
     public function messages()
     {
     return [
-        'assunto.required' => 'O assunto não pode ficar em branco.',
+        'assunto.required' => 'O termo não pode ficar em branco.',
     ];
     }
 }

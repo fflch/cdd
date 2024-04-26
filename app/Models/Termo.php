@@ -14,8 +14,10 @@ class Termo extends Model implements Auditable
     protected $guarded = ['id'];
 
     const campos = [
-        'assunto'       => 'Assunto',
-        'cdd'           => 'CDD'
+        'assunto'    => 'Termo',
+        'titulo'     => 'Remissiva',
+        'cdd'        => 'CDD',
+        'observacao' => 'Observação',
     ];
 
     public static function categorias(){
