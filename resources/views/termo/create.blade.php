@@ -13,25 +13,23 @@
 
         <div class="row">
           <div id="container_cdd" class="col-sm form-group">
-            @foreach(request()->cdds ?? [''] as $cdd)
-              <b>CDDs</b> <button class="btn btn-primary ml-2">+</button><br>
-              <div id="cdd{{ $loop->index }}">
-                <input name="cdds[]" value=""><button class="btn btn-danger ml-2">-</button><br>
-              </div>
+            <b>CDDs</b><br>
+            @foreach(old('cdds') ?? [''] as $cdd)
+            <div id="cdd{{ $loop->index }}" class="cdd">
+              <input type="text" name="cdds[]" value="{{ $cdd }}">@if($loop->index == 0)<button class="btn btn-primary ml-2 btn-sm">+</button>@else<button class="btn btn-danger ml-2 btn-sm">-</button>@endif
+            </div>
             @endforeach
-              <div id="cdd{{ count(request()->cdds ?? ['']) }}"></div>
           </div>
         </div>
 
         <div class="row">
           <div id="container_remissiva" class="col-sm form-group">
-            @foreach(request()->remissivas ?? [''] as $remissiva)
-              <b>Remissivas</b> <button class="btn btn-primary ml-2">+</button><br>
-              <div id="remissiva{{ $loop->index }}">
-                <input name="remissivas[]" value=""><button class="btn btn-danger ml-2">-</button><br>
-              </div>
+            <b>Remissivas</b><br>
+            @foreach(old('remissivas') ?? [''] as $remissiva)
+            <div id="remissiva{{ $loop->index }}" class="remissiva">
+              <input type="text" name="remissivas[]" value="{{ $remissiva }}">@if($loop->index == 0)<button class="btn btn-primary ml-2 btn-sm">+</button>@else<button class="btn btn-danger ml-2 btn-sm">-</button>@endif
+            </div>
             @endforeach
-              <div id="remissiva{{ count(request()->remissivas ?? ['']) }}"></div>
           </div>
         </div>
 
@@ -110,59 +108,39 @@
 @section('javascripts_bottom')
 <script>
   $(document).ready( function () {
-    let row_cdd = $("input[name^='cdds']").length;
-    let row_remissiva = $("input[name^='remissivas']").length;
 
     $("#container_cdd").on("click", ".btn-primary", function(e){
       e.preventDefault();
-      if(row_cdd < 4) {
-        let new_row_cdd = row_cdd - 1;
-        $("#cdd" + row_cdd).html( $("#cdd" + new_row_cdd).html() );
-        $("#container_cdd").append('<div id="cdd' + (row_cdd + 1)+ '"></div>');
-        row_cdd++;
+      var total_cdd = $("input[name^='cdds']").length;
+      if(total_cdd < 6) {
+        $(".cdd:last").after('<div id="cdd' + total_cdd +'" class="cdd"></div>');
+        $("#cdd" + total_cdd).append('<input type="text" name="cdds[]"><button class="btn btn-danger ml-2 btn-sm">-</button>');
       }
     });
 
     $("#container_cdd").on("click", ".btn-danger", function(e){
       e.preventDefault();
-      if(row_cdd > 1){
-        $(this).closest("div").remove();
-        row_cdd--;
-        $("div[id^='cdd']").each(function(index, value) {
-          $(this).attr("id","cdd" + index);
-        });
-      }
+      $(this).closest("div").remove();
+      $("div[id^='cdd']").each(function(index, value) {
+        $(this).attr("id","cdd" + index);
+      });
     });
 
     $("#container_remissiva").on("click", ".btn-primary", function(e){
       e.preventDefault();
-      if(row_remissiva < 4) {
-        let new_row_remissiva = row_remissiva - 1;
-        $("#remissiva" + row_remissiva).html( $("#remissiva" + new_row_remissiva).html() );
-        $("#container_remissiva").append('<div id="remissiva' + (row_remissiva + 1)+ '"></div>');
-        row_remissiva++;
+      var total_remissiva = $("input[name^='remissivas']").length;
+      if(total_remissiva < 6) {
+        $(".remissiva:last").after('<div id="remissiva' + total_remissiva +'" class="remissiva"></div>');
+        $("#remissiva" + total_remissiva).append('<input type="text" name="remissivas[]"><button class="btn btn-danger ml-2 btn-sm">-</button>');
       }
     });
 
     $("#container_remissiva").on("click", ".btn-danger", function(e){
       e.preventDefault();
-      if(row_remissiva > 1){
-        $(this).closest("div").remove();
-        row_remissiva--;
-        $("div[id^='remissiva']").each(function(index, value) {
-          $(this).attr("id","remissiva" + index);
-        });
-      }
-    });
-
-
-    $("input[name^='search']").keypress(function (e) {
-      var key = e.which;
-      if(key == 13)  // the enter key code
-        {
-          $('#buscar').click();
-          return false;
-        }
+      $(this).closest("div").remove();
+      $("div[id^='remissiva']").each(function(index, value) {
+        $(this).attr("id","remissiva" + index);
+      });
     });
 
   });
