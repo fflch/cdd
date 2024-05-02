@@ -112,7 +112,7 @@
     $("#container_cdd").on("click", ".btn-primary", function(e){
       e.preventDefault();
       var total_cdd = $("input[name^='cdds']").length;
-      if(total_cdd < 6) {
+      if(total_cdd < 8) {
         $(".cdd:last").after('<div id="cdd' + total_cdd +'" class="cdd"></div>');
         $("#cdd" + total_cdd).append('<input type="text" name="cdds[]"><button class="btn btn-danger ml-2 btn-sm">-</button>');
       }
@@ -129,7 +129,7 @@
     $("#container_remissiva").on("click", ".btn-primary", function(e){
       e.preventDefault();
       var total_remissiva = $("input[name^='remissivas']").length;
-      if(total_remissiva < 6) {
+      if(total_remissiva < 8) {
         $(".remissiva:last").after('<div id="remissiva' + total_remissiva +'" class="remissiva"></div>');
         $("#remissiva" + total_remissiva).append('<input type="text" name="remissivas[]"><button class="btn btn-danger ml-2 btn-sm">-</button>');
       }
