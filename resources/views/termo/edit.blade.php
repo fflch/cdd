@@ -16,22 +16,34 @@
         <div class="row">
           <div id="container_cdd" class="col-sm form-group">
             <b>CDDs</b><br>
-            @foreach($termo->cdds ?? [''] as $cdd)
-            <div id="cdd{{ $loop->index }}" class="cdd">
-              <input type="text" name="cdds[]" value="{{ $cdd->cdd }}">@if($loop->index == 0)<button class="btn btn-primary ml-2 btn-sm">+</button>@else<button class="btn btn-danger ml-2 btn-sm">-</button>@endif
+            @if(count($termo->cdds) === 0)
+            <div id="cdd0" class="cdd">
+              <input type="text" name="cdds[]" value=""><button class="btn btn-primary ml-2 btn-sm">+</button>
             </div>
-            @endforeach
+            @else
+              @foreach($termo->cdds as $cdd)
+              <div id="cdd{{ $loop->index }}" class="cdd">
+                <input type="text" name="cdds[]" value="{{ $cdd->cdd }}">@if($loop->index == 0)<button class="btn btn-primary ml-2 btn-sm">+</button>@else<button class="btn btn-danger ml-2 btn-sm">-</button>@endif
+              </div>
+              @endforeach
+            @endif
           </div>
         </div>
 
         <div class="row">
           <div id="container_remissiva" class="col-sm form-group">
             <b>Remissivas</b><br>
-            @foreach($termo->remissivas ?? [''] as $remissiva)
-            <div id="remissiva{{ $loop->index }}" class="remissiva">
-              <input type="text" name="remissivas[]" value="{{ $remissiva->titulo }}">@if($loop->index == 0)<button class="btn btn-primary ml-2 btn-sm">+</button>@else<button class="btn btn-danger ml-2 btn-sm">-</button>@endif
+            @if(count($termo->remissivas) === 0)
+            <div id="remissiva0" class="remissiva">
+              <input type="text" name="remissivas[]" value=""><button class="btn btn-primary ml-2 btn-sm">+</button>
             </div>
-            @endforeach
+            @else
+              @foreach($termo->remissivas as $remissiva)
+              <div id="remissiva{{ $loop->index }}" class="remissiva">
+                <input type="text" name="remissivas[]" value="{{ $remissiva->titulo }}">@if($loop->index == 0)<button class="btn btn-primary ml-2 btn-sm">+</button>@else<button class="btn btn-danger ml-2 btn-sm">-</button>@endif
+              </div>
+              @endforeach
+            @endif
           </div>
         </div>
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TermoRequest;
 use Illuminate\Database\Eloquent\Builder;
 use App\Services\TermoService;
+use App\Services\RemissivaService;
 use App\Http\Requests\SearchCDDRequest;
 
 class TermoController extends Controller
@@ -56,19 +57,10 @@ class TermoController extends Controller
             $termo->cdds()->attach($cdd->id);
         }
 
-        foreach(array_filter($request->remissivas) as $remissiva){
-            $remissiva = trim($remissiva);
-            $remissiva_db = Remissiva::where('titulo', $remissiva)->where('termo_id', $termo->id)->first();
-            if(!$remissiva_db) {
-                $remissiva_db = new Remissiva;
-                $remissiva_db->titulo = $remissiva;
-                $remissiva_db->termo_id = $termo->id;
-                $remissiva_db->save();
-            }
-        }
+        RemissivaService::handle($request->remissivas, $termo->id);
 
         request()->session()->flash('alert-info','Registro cadastrado com sucesso');
-        return redirect("/termos/{$termo->id}");
+        return redirect("/termos/{$termo->id}/edit");
     }
 
     /**
@@ -92,6 +84,7 @@ class TermoController extends Controller
      */
     public function edit(Termo $termo)
     {
+        $termo->load('cdds', 'remissivas');
         $this->authorize('admins');
         return view('termo.edit',[
             'termo' => $termo,
@@ -110,24 +103,8 @@ class TermoController extends Controller
         $this->authorize('admins');
         $termo->update($request->validated());
 
-        $remissivas = array_filter($request->remissivas);
-
-        Remissiva::where('termo_id',$termo->id)->delete();
-
-        foreach($remissivas as $remissiva){
-            $remissiva = trim($remissiva);
-                $remissiva_db = new Remissiva;
-                $remissiva_db->titulo = $remissiva;
-                $remissiva_db->termo_id = $termo->id;
-                $remissiva_db->save();
-                $termo->assunto = $termo->assunto;
-                $termo->save();
-        }
-
-        $cdds = array_filter($request->cdds);
-
         $cdd_ids = array();
-        foreach($cdds as $cdd){
+        foreach(array_filter($request->cdds) as $cdd){
             $cdd_db = Cdd::firstOrCreate(
                 ['cdd' => trim($cdd)],
             );
@@ -135,7 +112,11 @@ class TermoController extends Controller
         }
         $termo->cdds()->sync($cdd_ids);
 
-        return redirect()->back();
+        Remissiva::where('termo_id',$termo->id)->delete();
+
+        RemissivaService::handle($request->remissivas, $termo->id);
+
+        return redirect()->back()->with('alert-info','Registro alterado com sucesso.');
     }
 
     /**
