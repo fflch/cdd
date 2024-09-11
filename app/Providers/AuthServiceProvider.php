@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        //'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -23,11 +23,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
+
         Gate::define('admin', function ($user) {
-            return false;
             $admins = explode(',', trim(env('SENHAUNICA_ADMINS')));
-            return ( in_array($user->username, $admins) and $user->username );
+            return ( in_array($user->username, $admins) and !empty($user->username) );
         });
     }
 }

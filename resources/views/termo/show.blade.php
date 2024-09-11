@@ -35,7 +35,7 @@
           <td>{{  $termo->categoria ?? ''  }}</td>
           <td>{{  $termo->observacao ?? ''  }}</td>
           <td class="text-center">
-            @can('admins')
+            @can('admin')
             <form action="/termos/{{  $termo->id  }}" method="POST">
                 @csrf
                 @method('delete')

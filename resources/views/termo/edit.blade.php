@@ -119,7 +119,7 @@
   </form>
   <div class = "card">
     <div class = "card-body">
-      <b>Data de Criação: </b>{{  old('created_at', $termo->created_at) }}<br>
+      <b>Data de Criação</b> {{ date('d/m/Y H:i', strtotime($termo->created_at))}}<br>
       <br><b>Alterações no termo</b>
       @include('partials.audit.index', ['model' => $termo])
     </div>

@@ -28,7 +28,7 @@ class CddController extends Controller
      */
     public function create()
     {
-        $this->authorize('admins');
+        $this->authorize('admin');
         return view('cdd.create',[
             'cdd' => new Cdd,
         ]);
@@ -42,7 +42,7 @@ class CddController extends Controller
      */
     public function store(CddRequest $request)
     {
-        $this->authorize('admins');
+        $this->authorize('admin');
         $validated = $request->validated();
         $cdd = Cdd::create($validated);
         request()->session()->flash('alert-info','CDD cadastrado com sucesso');
@@ -70,7 +70,7 @@ class CddController extends Controller
      */
     public function edit(Cdd $cdd)
     {
-        $this->authorize('admins');
+        $this->authorize('admin');
         return view('cdd.edit',[
             'cdd' => $cdd
         ]);
@@ -85,7 +85,7 @@ class CddController extends Controller
      */
     public function update(CddRequest $request, Cdd $cdd)
     {
-        $this->authorize('admins');
+        $this->authorize('admin');
         $validated = $request->validated();
         $cdd->update($validated);
         request()->session()->flash('alert-info','CDD atualizado com sucesso');
@@ -100,7 +100,7 @@ class CddController extends Controller
      */
     public function destroy(Cdd $cdd)
     {
-        $this->authorize('admins');
+        $this->authorize('admin');
         $cdd->delete();
         request()->session()->flash('alert-info','CDD excluído com sucesso.');
         return redirect('/');

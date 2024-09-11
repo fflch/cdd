@@ -1,6 +1,6 @@
 <tr>
   <td>
-    @can('admins')
+    @can('admin')
       <a href="/termos/{{ $termo->id }}/edit">{{  $termo->assunto ?? ''  }}</a>
     @else
       {{  $termo->assunto ?? ''  }}
@@ -23,7 +23,7 @@
   <td>{{  $termo->categoria ?? ''  }}</td>
   <td>{{  $termo->observacao ?? ''  }}</td>
   <td class="text-center">
-    @can('admins')
+    @can('admin')
     <a href="/termos/{{ $termo->id }}" class="delete-item btn text-danger"><i class="fas fa-trash-alt"></i></a>
     @endcan
   </td>
