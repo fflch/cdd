@@ -25,7 +25,7 @@ $right_menu = [
         'target' => '_blank',
         'url' => config('app.url') . '/logs',
         'align' => 'right',
-        'can' => 'admins',
+        'can' => 'admin',
     ],
     [
         'text' => '<i class="fas fa-users"></i>',
@@ -33,7 +33,7 @@ $right_menu = [
         'target' => '_blank',
         'url' => config('app.url') . '/users',
         'align' => 'right',
-        'can' => 'admins',
+        'can' => 'admin',
     ],
 ];
 
